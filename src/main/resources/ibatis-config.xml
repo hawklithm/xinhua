@@ -11,4 +11,5 @@
 	<sqlMap resource="sql/sql-ibatis-hospital.xml"/>
 	<sqlMap resource="sql/sql-ibatis-staff.xml"/>
 	<sqlMap resource="sql/sql-ibatis-gps.xml"/>
+	<sqlMap resource="sql/sql-ibatis-item.xml"/>
 </sqlMapConfig>
