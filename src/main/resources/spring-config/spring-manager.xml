@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:davinci.properties" />
+	</bean>
+
+	<!-- bean分类注册管理机 -->
+	<bean class="com.multiagent.hawklithm.davinci.init.AutoRegister" />
+
+	<!-- RFID流水信息管理 -->
+	<bean id="rfidManager"
+		class="com.multiagent.hawklithm.leon.manager.RFIDMachineFlowRecordManager" />
+	<!-- 异步任务注册机 -->
+	<bean id="asynTaskRegManager"
+		class="com.multiagent.hawklithm.davinci.AsynTaskRegisterMachine" />
+
+	<!-- 生产过程模块管理注册机 -->
+	<bean id="pmRegManager"
+		class="com.multiagent.hawklithm.leon.manager.ProcessModuleRegisterManager" />
+
+	<!-- 订单管理 -->
+	<bean id="orderManager" class="com.multiagent.hawklithm.sephiroth.manager.OrderManager" />
+
+	<!-- 消息注册管理机 -->
+	<bean id=" wardenManager"
+		class="com.multiagent.hawklithm.shadowsong.manager.WardenManager" />
+
+	<!-- 读卡器数据传输管理 -->
+	<bean id="readerDataManager"
+		class="com.multiagent.hawklithm.readerNet.manager.ReaderDataManager" />
+
+	<!-- "读卡器接收到数"消息推送 -->
+	<bean id="readerMessageComingPusher"
+		class="com.multiagent.hawklithm.readerNet.manager.MessageComingPusher" />
+
+	<!-- 准备运单消息推送 -->
+	<bean id="transportOrderMessagePusher"
+		class="com.multiagent.hawklithm.transport.manager.TransportOrderMessagePusher" />
+
+	<!-- 运单管理 -->
+	<bean id="transportOrderManager"
+		class="com.multiagent.hawklithm.transport.manager.TransportOrderManager"
+		init-method="init" />
+
+	<!-- 用户信息管理 -->
+	<bean id="userInfoManager" class="com.multiagent.hawklithm.user.manager.UserInfoManager" />
+
+	<!-- 医院信息管理 -->
+	<bean id="hospitalInfoManager"
+		class="com.multiagent.hawklithm.hospital.manager.HospitalInfoManager" />
+
+	<!-- 机器信息管理 -->
+	<bean id="machineInfoManager"
+		class="com.multiagent.hawklithm.machineInfo.manager.MachineInfoManager" />
+
+	<!-- 车辆信息管理 -->
+	<bean id="vehicleInfoManager"
+		class="com.multiagent.hawklithm.vehicle.manager.VehicleInfoManager" />
+
+	<!-- 员工信息管理 -->
+	<bean id="staffInfoManager" class="com.multiagent.hawklithm.staff.manager.StaffInfoManager" />
+	
+	<!-- 生产过程信息管理 -->
+	<bean id="processInfoManager"
+		class="com.multiagent.hawklithm.leon.process.ProcessInfoManager">
+		<property name="ProcessMap">
+			<map>
+				<entry key="${module.process.sorting.name}" value-ref="sorting_process_module" />
+				<entry key="${module.process.cleananddisinfect.name}" value-ref="clean_and_disinfect_process_module" />
+				<entry key="${module.process.packaging.name}" value-ref="packaging_process_module" />
+				<entry key="${module.process.secondarydisinfect.name}" value-ref="secondary_disinfect_process_module" />
+				<entry key="${module.process.sterilestorage.name}" value-ref="sterile_storage_process_module" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- gps信息管理 -->
+	<bean id="gpsInfoManager" class="com.multiagent.hawklithm.gps.manager.GpsInfoManager" />
+
+</beans>

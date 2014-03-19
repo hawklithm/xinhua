@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
+	default-autowire="byName" default-lazy-init="false">
+
+	<bean id="watcher"
+		class="com.multiagent.hawklithm.davinci.eventListener.RPCBufferCallBackWatcher">
+		<constructor-arg>
+			<value>200</value>
+		</constructor-arg>
+	</bean>
+	<bean id="rpcExec"
+		class="com.multiagent.hawklithm.davinci.rpc.Server.RPCServerExecManager" />
+
+	<bean id="rpcServerNettyHandler"
+		class="com.multiagent.hawklithm.davinci.net.RPCServerNettyHandler" />
+
+
+
+	<bean name="RPCregManager"
+		class="com.multiagent.hawklithm.davinci.rpc.Server.RPCRegManager" />
+
+
+	<bean id="rpcRoot" class="com.multiagent.hawklithm.davinci.rpc.Server.RPCServer">
+		<constructor-arg>
+			<value>10007</value>
+		</constructor-arg>
+	</bean>
+
+
+
+
+	<!-- ibatis数据库操作 -->
+	<bean id="ibatisManager" class="com.multiagent.hawklithm.ibatis.IbatisManagerModule" />
+
+	<bean id="interfaceInfoDAO"
+		class="com.multiagent.hawklithm.davinci.rpc.DAO.RPCInterfaceInfoDAO" />
+	<!-- RPC接口调用权限控制 -->
+	<bean id="aclManager" class="com.multiagent.hawklithm.davinci.rpc.acl.RPCACLManager" />
+
+	<!-- 注册可调用RPC接口 -->
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName" value="com.multiagent.hawklithm.rpc.TestInterface" />
+		<property name="version" value="1.0.0.hawk" />
+		<property name="className"
+			value="com.multiagent.hawklithm.rpc.impl.ITestInterface" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName" value="com.multiagent.hawklithm.rpc.Interfacetest" />
+		<property name="version" value="1.0.0.hawk" />
+		<property name="className" value="com.multiagent.hawklithm.rpc.impl.ImplTest" />
+		<property name="comment" value="此处填写接口介绍" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.sephiroth.interface4rpc.RPCOrderManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="orderManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.sephiroth.manager.OrderManager" />
+		<property name="comment" value="订单处理RPC接口" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.transport.interface4rpc.RPCTransportOrderManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="transportOrderManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.transport.manager.TransportOrderManager" />
+		<property name="comment" value="运单处理RPC接口" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.hospital.interface4rpc.RPCHospitalInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="hospitalInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.hospital.manager.HospitalInfoManager" />
+		<property name="comment" value="医院信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.machineInfo.interface4rpc.RPCMachineInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="machineInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.machineInfo.manager.MachineInfoManager" />
+		<property name="comment" value="设备信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.staff.interface4rpc.RPCStaffInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="staffInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.staff.manager.StaffInfoManager" />
+		<property name="comment" value="员工信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.user.interface4rpc.RPCUserInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="userInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.user.manager.UserInfoManager" />
+		<property name="comment" value="用户信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.vehicle.interface4rpc.RPCVehicleInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="vehicleInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.vehicle.manager.VehicleInfoManager" />
+		<property name="comment" value="车辆信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.leon.process.interface4rpc.RPCProcessInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="processInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.leon.process.ProcessInfoManager" />
+		<property name="comment" value="生产过程信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+	
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.leon.interface4rpc.RPCMachineFlowRecordManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="rfidManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.leon.manager.RFIDMachineFlowRecordManager" />
+		<property name="comment" value="流水信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+	
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.gps.interface4rpc.RPCGpsInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="gpsInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.gps.manager.GpsInfoManager" />
+		<property name="comment" value="地理信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+
+</beans>
