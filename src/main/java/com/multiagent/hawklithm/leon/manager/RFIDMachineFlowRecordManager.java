@@ -12,6 +12,8 @@ import com.multiagent.hawklithm.history.dao.PackageHistoryDAO;
 import com.multiagent.hawklithm.history.dataobject.ExItemHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.ItemHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.PackageHistoryDO;
+import com.multiagent.hawklithm.item.dao.IbatisItemInfoDAO;
+import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 import com.multiagent.hawklithm.leon.DO.RFIDDataPac;
 import com.multiagent.hawklithm.leon.DO.SqlEquipCamReaderMappingDO;
 import com.multiagent.hawklithm.leon.DO.SqlReaderAtEquipmentDO;
@@ -40,6 +42,7 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 	private IbatisMachineInfoDAO ibatisMachineInfoDao;
 	private IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO;
 	private IbatisStaffInfoDAO ibatisStaffInfoDao;
+	private IbatisItemInfoDAO ibatisItemInfoDao;
 	
 	
 	public Integer storeItemHistoryToDataBase(Date time, Integer itemId, Integer readerId, Integer cameraId, String itemStatus,Integer equipmentId){
@@ -92,7 +95,11 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 				null, null, null);
 		return ret.get(0);
 	}
-	
+	private ItemInfoDO queryItemInfoById(int itemId){
+		 ItemInfoDO ret=ibatisItemInfoDao.queryById(itemId);
+		 return ret;
+		 
+	}
 	@Override
 	public ExItemHistoryDO[] queryItemHistory(Integer id, Integer itemId, Integer readerId, Integer equipmentId, Date startTime, Date endTime,Integer offset,Integer length){
 		try {
@@ -104,6 +111,7 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 				 if (ret[index].getEquipmentId()!=null){
 					 ret[index].setProcessName(getEquipmentTypeByEquipmentId(ret[index].getEquipmentId()));
 					 ret[index].setStaffInfo(queryStaffInfoByEquipmentId(ret[index].getEquipmentId()));
+	                 ret[index].setType(queryItemInfoById(ret[index].getItemId()).getItemType()+"");
 				 }
 			 }
 			 return ret;

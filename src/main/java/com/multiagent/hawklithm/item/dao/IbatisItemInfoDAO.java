@@ -47,7 +47,8 @@ public class IbatisItemInfoDAO {
 		Assert.notNull(length);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("itemId", itemId);
-//		paramMap.put("gmtCreate", gmtCreate);
+		paramMap.put("startTime", startTime);
+		paramMap.put("endTime", endTime);
 		paramMap.put("itemType", itemType);
 		paramMap.put("hospitalId", hospitalId);
 		paramMap.put("manufacturer", manufacturer);
@@ -56,6 +57,16 @@ public class IbatisItemInfoDAO {
 		paramMap.put("length", length);
 		return (List<ItemInfoDO>) ibatisManager.select("IbatisItemInfoDAO.query", paramMap);
 	}
-
-	
+public ItemInfoDO queryById(Integer itemId){
+	Assert.notNull(itemId);
+	Map<String,Object> paramMap=new HashMap<String,Object>();
+	paramMap.put("itemId",itemId);
+	return (ItemInfoDO) ibatisManager.select("IbatisItemInfoDAO.queryById", paramMap);
+}
+public List<ItemInfoDO> queryByType(Integer itemType){
+	Assert.notNull(itemType);
+	Map<String,Object> paramMap=new HashMap<String,Object>();
+	paramMap.put("itemType",itemType);
+	return (List<ItemInfoDO>)ibatisManager.select("IbatisItemInfoDAO.queryByType", paramMap);
+}
 }

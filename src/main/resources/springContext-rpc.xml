@@ -168,5 +168,14 @@
 		<property name="comment" value="地理信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-
+		<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+	<property name="interfaceName"
+			value="com.mutiagent.hawklithm.item.interface4rpc.RPCItemInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="itemInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.item.manager.ItemInfoManager" />
+		<property name="comment" value="器械信息管理" />
+		<property name="visible" value="true" />
+		</bean>
 </beans>

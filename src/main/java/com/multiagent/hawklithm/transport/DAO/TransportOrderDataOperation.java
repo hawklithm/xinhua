@@ -46,7 +46,12 @@ public class TransportOrderDataOperation {
 				} catch (Exception e) {
 					status.setRollbackOnly();
 					// return false;
-					throw e;
+					try {
+						throw e;
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				return true;
 			}
