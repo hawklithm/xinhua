@@ -4,8 +4,12 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.util.Assert;
+
 import com.multiagent.hawklithm.history.dao.ItemHistoryDAO;
 import com.multiagent.hawklithm.history.dao.PackageHistoryDAO;
+import com.multiagent.hawklithm.history.dataobject.ExItemHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.ItemHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.PackageHistoryDO;
 import com.multiagent.hawklithm.leon.DO.RFIDDataPac;
@@ -14,6 +18,12 @@ import com.multiagent.hawklithm.leon.DO.SqlReaderAtEquipmentDO;
 import com.multiagent.hawklithm.leon.dao.ItemPackageMappingInfoDAO;
 import com.multiagent.hawklithm.leon.dao.MachineFlowRecordDAO;
 import com.multiagent.hawklithm.leon.interface4rpc.RPCMachineFlowRecordManagerInterface;
+import com.multiagent.hawklithm.machineInfo.DAO.IbatisEquipmentStaffMappingDAO;
+import com.multiagent.hawklithm.machineInfo.DAO.IbatisMachineInfoDAO;
+import com.multiagent.hawklithm.machineInfo.DO.EquipmentStaffMappingDO;
+import com.multiagent.hawklithm.machineInfo.DO.MachineInfoDO;
+import com.multiagent.hawklithm.staff.DAO.IbatisStaffInfoDAO;
+import com.multiagent.hawklithm.staff.DO.StaffInfoDO;
 
 /**
  * RFID设备流水信息记录管理
@@ -27,6 +37,9 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 	private ItemPackageMappingInfoDAO itemPackageMappingInfoDAO;
 	private ItemHistoryDAO itemHistoryDAO;
 	private PackageHistoryDAO packageHistoryDAO;
+	private IbatisMachineInfoDAO ibatisMachineInfoDao;
+	private IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO;
+	private IbatisStaffInfoDAO ibatisStaffInfoDao;
 	
 	
 	public Integer storeItemHistoryToDataBase(Date time, Integer itemId, Integer readerId, Integer cameraId, String itemStatus,Integer equipmentId){
@@ -47,11 +60,53 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 		return 0;
 	}
 	
+	
+	private String getEquipmentTypeByEquipmentId(Integer equipmentId){
+		List<MachineInfoDO> ret = ibatisMachineInfoDao.equipmentDetailQuery(null, null, null,
+				null, null, null, equipmentId,null,
+				null, null, 1);
+		if (ret.size()<=0){
+			return "null";
+		}else{
+			return  ret.get(0).getEquipmentType();
+		}
+				
+	}
+	
+	private  String queryStaffInfoByEquipmentId(Integer equipmentId){
+		Assert.notNull(equipmentId);
+		List<EquipmentStaffMappingDO>list= ibatisEquipmentStaffMappingDAO.queryMapping(equipmentId, null, null, 100);
+		StringBuilder builder=new StringBuilder();
+		for (EquipmentStaffMappingDO index:list){
+			StaffInfoDO staffInfo=queryStaffNameByStaffId(index.getStaffId());
+			builder.append(staffInfo.getStaffName()).append('(').append(index.getStaffId()).append(')').append(',');
+		}
+		if (builder.length()>1){
+			return builder.substring(0, builder.length()-1);
+		}
+		return "null";
+	}
+	
+	private  StaffInfoDO queryStaffNameByStaffId(int staffId) throws DataAccessException {
+		List<StaffInfoDO> ret = ibatisStaffInfoDao.query(staffId, null, null, null, null, null,
+				null, null, null);
+		return ret.get(0);
+	}
+	
 	@Override
-	public ItemHistoryDO[] queryItemHistory(Integer id, Integer itemId, Integer readerId, Integer equipmentId, Date startTime, Date endTime){
+	public ExItemHistoryDO[] queryItemHistory(Integer id, Integer itemId, Integer readerId, Integer equipmentId, Date startTime, Date endTime,Integer offset,Integer length){
 		try {
-			 List<ItemHistoryDO> ans= itemHistoryDAO.selectItemHistory(id, itemId, readerId, equipmentId, startTime, endTime);
-			 return ans.toArray(new ItemHistoryDO[ans.size()]);
+			 List<ItemHistoryDO> ans= itemHistoryDAO.selectItemHistory(id, itemId, readerId, equipmentId, startTime, endTime,offset,length);
+			 ExItemHistoryDO[] ret=new ExItemHistoryDO[ans.size()];
+			 int tmpLength=ret.length;
+			 for (int index=0;index<tmpLength;index++){
+				 ret[index]=new ExItemHistoryDO(ans.get(index));
+				 if (ret[index].getEquipmentId()!=null){
+					 ret[index].setProcessName(getEquipmentTypeByEquipmentId(ret[index].getEquipmentId()));
+					 ret[index].setStaffInfo(queryStaffInfoByEquipmentId(ret[index].getEquipmentId()));
+				 }
+			 }
+			 return ret;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -59,9 +114,9 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 	}
 	
 	@Override
-	public PackageHistoryDO[] queryPackageHistory(Integer id, Integer packageId,Integer readerId,Integer equipmentId,Date startTime,Date  endTime){
+	public PackageHistoryDO[] queryPackageHistory(Integer id, Integer packageId,Integer readerId,Integer equipmentId,Date startTime,Date  endTime,Integer offset,Integer length){
 		 try {
-			List<PackageHistoryDO>ans=packageHistoryDAO.selectPackageHistory(id, packageId, readerId, equipmentId, startTime, endTime);
+			List<PackageHistoryDO>ans=packageHistoryDAO.selectPackageHistory(id, packageId, readerId, equipmentId, startTime, endTime,offset,length);
 			return ans.toArray(new PackageHistoryDO[ans.size()]);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -219,6 +274,19 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 
 	public void setPackageHistoryDAO(PackageHistoryDAO packageHistoryDAO) {
 		this.packageHistoryDAO = packageHistoryDAO;
+	}
+	public IbatisMachineInfoDAO getIbatisMachineInfoDao() {
+		return ibatisMachineInfoDao;
+	}
+	public void setIbatisMachineInfoDao(IbatisMachineInfoDAO ibatisMachineInfoDao) {
+		this.ibatisMachineInfoDao = ibatisMachineInfoDao;
+	}
+	public IbatisEquipmentStaffMappingDAO getIbatisEquipmentStaffMappingDAO() {
+		return ibatisEquipmentStaffMappingDAO;
+	}
+	public void setIbatisEquipmentStaffMappingDAO(
+			IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO) {
+		this.ibatisEquipmentStaffMappingDAO = ibatisEquipmentStaffMappingDAO;
 	}
 
 }

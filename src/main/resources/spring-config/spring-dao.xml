@@ -18,6 +18,5 @@
 	<bean id="gpsInfoDAO" class="com.multiagent.hawklithm.gps.DAO.GpsInfoDAO" />
 	<bean id="packageHistoryDAO" class="com.multiagent.hawklithm.history.dao.PackageHistoryDAO"/>
 	<bean id="itemHistoryDAO" class="com.multiagent.hawklithm.history.dao.ItemHistoryDAO"/>
-	
-	
+	<bean id="ibatisEquipmentStaffMappingDAO" class="com.multiagent.hawklithm.machineInfo.DAO.IbatisEquipmentStaffMappingDAO"/>
 </beans>

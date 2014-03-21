@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.Assert;
 
 import com.multiagent.hawklithm.history.dataobject.ItemHistoryDO;
 import com.multiagent.hawklithm.ibatis.IbatisManagerModule;
@@ -44,14 +45,17 @@ public class ItemHistoryDAO {
 	}
 
 	public List<ItemHistoryDO> selectItemHistory(Integer id, Integer itemId,
-			Integer readerId, Integer equipmentId,Date startTime,Date endTime) throws SQLException {
+			Integer readerId, Integer equipmentId,Date startTime,Date endTime,Integer offset,Integer length) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
+		Assert.notNull(length);
 		map.put("id", id);
 		map.put("equipmentId", equipmentId);
 		map.put("itemId", itemId);
 		map.put("readerId", readerId);
 		map.put("startTime", startTime);
 		map.put("endTime", endTime);
+		map.put("offset", offset);
+		map.put("length", length);
 		return (List<ItemHistoryDO>) ibatisManager.select(
 				"ItemHistoryDAO.selectItemHistory", map);
 	}
