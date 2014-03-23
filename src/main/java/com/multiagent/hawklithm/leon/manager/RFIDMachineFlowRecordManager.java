@@ -296,5 +296,17 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 			IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO) {
 		this.ibatisEquipmentStaffMappingDAO = ibatisEquipmentStaffMappingDAO;
 	}
+	public IbatisStaffInfoDAO getIbatisStaffInfoDao() {
+		return ibatisStaffInfoDao;
+	}
+	public void setIbatisStaffInfoDao(IbatisStaffInfoDAO ibatisStaffInfoDao) {
+		this.ibatisStaffInfoDao = ibatisStaffInfoDao;
+	}
+	public IbatisItemInfoDAO getIbatisItemInfoDao() {
+		return ibatisItemInfoDao;
+	}
+	public void setIbatisItemInfoDao(IbatisItemInfoDAO ibatisItemInfoDao) {
+		this.ibatisItemInfoDao = ibatisItemInfoDao;
+	}
 
 }
