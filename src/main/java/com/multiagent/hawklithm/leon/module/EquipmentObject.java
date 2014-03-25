@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.multiagent.hawklithm.item.dao.IbatisItemInfoDAO;
+import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty;
 import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
 import com.multiagent.hawklithm.leon.module.property.DO.PropertyCollector;
@@ -17,6 +19,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	private WardenManager wardenManager;
 	protected EquipmentPropertyChangerAnnouncerBuffer propertyBuffer=new EquipmentPropertyChangerAnnouncerBuffer();
 	protected T moduleProperty;
+	protected IbatisItemInfoDAO ibatisItemInfoDAO;
 
 	/**
 	 * 设置设备属性
@@ -39,7 +42,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	 */
 	abstract public PropertyCollector doGetEquipmentSummaryInfoUnifiedInterface();
 	
-	abstract public ChangerAnnouncerProperty[] getBufferedProperty();
+	abstract public ChangerAnnouncerProperty getBufferedProperty();
 	
 
 	/**
@@ -66,13 +69,19 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	public void addItem(int RFID) {
 //		itemRFIDs.add(Integer.valueOf(RFID));
 //		moduleProperty.getItemRFIDs().add(Integer.valueOf(RFID));
-		moduleProperty.addItem(Integer.valueOf(RFID));
-		propertyBuffer.addItem(RFID);
+		ItemInfoDO item=ibatisItemInfoDAO.queryById(RFID);
+		moduleProperty.addItem(item);
+		propertyBuffer.addItem(item);
+	}
+	
+	public void addItem(ItemInfoDO item){
+		moduleProperty.addItem(item);
+		propertyBuffer.addItem(item);
 	}
 
 	public void addItem(int[] RFIDs) {
 		if (moduleProperty.getItemRFIDs() == null) {
-			moduleProperty.setItemRFIDs(Collections.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>()));
+			moduleProperty.setItemRFIDs(Collections.newSetFromMap(new ConcurrentHashMap<ItemInfoDO, Boolean>()));
 		}
 		for (int rfid : RFIDs) {
 			addItem(rfid);
@@ -92,8 +101,9 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	}
 
 	public boolean removeItem(int RFID) {
-		propertyBuffer.removeItem(RFID);
-		return moduleProperty.removeItem(Integer.valueOf(RFID));
+		ItemInfoDO item=ibatisItemInfoDAO.queryById(RFID);
+		propertyBuffer.removeItem(item);
+		return moduleProperty.removeItem(item);
 //		return moduleProperty.getItemRFIDs().remove(Integer.valueOf(RFID));
 //		return itemRFIDs.remove(Integer.valueOf(RFID));
 	}
@@ -128,7 +138,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	public void setStaffRFID(int staffRFID) {
 //		this.staffRFID = staffRFID;
 		moduleProperty.setStaffRFID(staffRFID);
-		propertyBuffer.add(moduleProperty);
+//		propertyBuffer.add(moduleProperty);
 	}
 
 	public WardenManager getWardenManager() {
@@ -139,20 +149,20 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 		this.wardenManager = wardenManager;
 	}
 
-	public Set<Integer> getItemRFIDs() {
+	public Set<ItemInfoDO> getItemRFIDs() {
 //		return itemRFIDs;
 		return moduleProperty.getItemRFIDs();
 	}
 
-	public void setItemRFIDs(Set<Integer> itemRFIDs) {
-		Set<Integer> items=moduleProperty.getItemRFIDs();
+	public void setItemRFIDs(Set<ItemInfoDO> itemRFIDs) {
+		Set<ItemInfoDO> items=moduleProperty.getItemRFIDs();
 		if (items == null) {
-			moduleProperty.setItemRFIDs(Collections.newSetFromMap(new ConcurrentHashMap<Integer, Boolean>()));
+			moduleProperty.setItemRFIDs(Collections.newSetFromMap(new ConcurrentHashMap<ItemInfoDO, Boolean>()));
 			items=moduleProperty.getItemRFIDs();
 		} else {
 			items.clear();
 		}
-		for (Integer i : itemRFIDs) {
+		for (ItemInfoDO i : itemRFIDs) {
 			addItem(i);
 //			this.itemRFIDs.add(i);
 		}
@@ -184,7 +194,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	public void setRfid(int rfid) {
 //		this.rfid = rfid;
 		moduleProperty.setRfid(rfid);
-		propertyBuffer.add(moduleProperty);
+//		propertyBuffer.add(moduleProperty);
 	}
 
 	public T getModuleProperty() {
@@ -193,6 +203,14 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 
 	public void setModuleProperty(T moduleProperty) {
 		this.moduleProperty = moduleProperty;
+	}
+
+	public IbatisItemInfoDAO getIbatisItemInfoDAO() {
+		return ibatisItemInfoDAO;
+	}
+
+	public void setIbatisItemInfoDAO(IbatisItemInfoDAO ibatisItemInfoDAO) {
+		this.ibatisItemInfoDAO = ibatisItemInfoDAO;
 	}
 
 

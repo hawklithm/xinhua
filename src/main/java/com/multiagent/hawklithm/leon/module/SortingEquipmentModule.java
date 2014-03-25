@@ -94,7 +94,8 @@ public class SortingEquipmentModule extends EquipmentObject<SortingEquipmentProp
 		return doGetEquipmentSummaryInfo();
 	}
 	@Override
-	public ChangerAnnouncerProperty[] getBufferedProperty() {
+	public ChangerAnnouncerProperty getBufferedProperty() {
+		propertyBuffer.markDown(moduleProperty.getRfid(), moduleProperty.getStaffRFID());
 		return propertyBuffer.getBuffer();
 	}
 }

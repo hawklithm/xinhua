@@ -22,5 +22,5 @@ public interface IProcessModule {
 	EquipmentObject<?> getEquipmentByRFID(int id) throws EquipmentNotFoundException;
 	<T extends ModuleProperty> List<T>   doGetEquipmentSummaryInfo();
 	List<? extends EquipmentObject<?>> getEquipmentList();
-	List<ChangerAnnouncerProperty[]> getBufferedPropertyList();
+	List<ChangerAnnouncerProperty> getBufferedPropertyList();
 }

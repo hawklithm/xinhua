@@ -119,7 +119,8 @@ public class CleanAndDisinfectEquipmentModule extends EquipmentObject<CleanAndDi
 	}
 
 	@Override
-	public ChangerAnnouncerProperty[] getBufferedProperty() {
+	public ChangerAnnouncerProperty getBufferedProperty() {
+		propertyBuffer.markDown(moduleProperty.getRfid(), moduleProperty.getStaffRFID());
 		return propertyBuffer.getBuffer();
 	}
 

@@ -167,7 +167,8 @@ public class PackagingEquipmentModule extends EquipmentObject<PackagingEquipment
 	}
 
 	@Override
-	public ChangerAnnouncerProperty[] getBufferedProperty() {
+	public ChangerAnnouncerProperty getBufferedProperty() {
+		propertyBuffer.markDown(moduleProperty.getRfid(), moduleProperty.getStaffRFID());
 		return propertyBuffer.getBuffer();
 	}
 

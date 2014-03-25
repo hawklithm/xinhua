@@ -60,8 +60,8 @@ public class SecondaryDisinfectProcess implements IProcessModule {
 
 
 	@Override
-	public List<ChangerAnnouncerProperty[]> getBufferedPropertyList() {
-		List<ChangerAnnouncerProperty[]> ret = new ArrayList<ChangerAnnouncerProperty[]>();
+	public List<ChangerAnnouncerProperty> getBufferedPropertyList() {
+		List<ChangerAnnouncerProperty> ret = new ArrayList<ChangerAnnouncerProperty>();
 		for (EquipmentObject<? extends ModuleProperty> object : equipmentList) {
 			ret.add(object.getBufferedProperty());
 		}

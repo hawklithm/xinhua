@@ -54,22 +54,22 @@ public class ProcessInfoManager implements RPCProcessInfoManagerInterface {
 	}
 
 	@Override
-	public ChangerAnnouncerPropertyArrayVersion[][] getBufferedPropertyList(String processName)  throws ModuleNotFoundException{
+	public ChangerAnnouncerPropertyArrayVersion[] getBufferedPropertyList(String processName)  throws ModuleNotFoundException{
 		if (!ProcessMap.containsKey(processName)) {
 			throw new ProcessModuleNotFoundException(" ", processName);
 		}
 		IProcessModule process = ProcessMap.get(processName);
-		List<ChangerAnnouncerProperty[]> list= process.getBufferedPropertyList();
+		List<ChangerAnnouncerProperty> list= process.getBufferedPropertyList();
 		System.out.println("getBufferedPropertyList()调用: "+gson.toJson(list));
 		//TODO 这里要把list从ChangerAnnouncerProperty转成ChangerAnnouncerPropertyArrayVersion，防止RPC调用参数出现问题
-		ChangerAnnouncerPropertyArrayVersion[][] ret=new ChangerAnnouncerPropertyArrayVersion[list.size()][];
+		ChangerAnnouncerPropertyArrayVersion[] ret=new ChangerAnnouncerPropertyArrayVersion[list.size()];
 		int length=list.size();
 		for (int i=0;i<length;i++){
-			int l=list.get(i).length;
-			ret[i]= new ChangerAnnouncerPropertyArrayVersion[l];
-			for (int j=0;j<l;j++){
-					ret[i][j]=new ChangerAnnouncerPropertyArrayVersion(list.get(i)[j]);
-			}
+//			int l=list.get(i).length;
+//			ret[i]= new ChangerAnnouncerPropertyArrayVersion[l];
+//			for (int j=0;j<l;j++){
+					ret[i]=new ChangerAnnouncerPropertyArrayVersion(list.get(i));
+//			}
 		}
 		return ret;
 //		return list.toArray(new ChangerAnnouncerProperty[list.size()][]);

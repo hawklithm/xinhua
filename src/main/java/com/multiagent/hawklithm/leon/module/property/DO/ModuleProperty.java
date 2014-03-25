@@ -6,16 +6,17 @@ import java.util.Set;
 import org.springframework.util.CollectionUtils;
 
 import com.google.gson.Gson;
+import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 
 public abstract class ModuleProperty implements PropertyCollector {
 	protected int rfid = (int) (Math.random() * 100000);
-	protected Set<Integer> itemRFIDs=new HashSet<Integer>();
+	protected Set<ItemInfoDO> itemRFIDs=new HashSet<ItemInfoDO>();
 	protected Set<Integer> packageRFIDs=new HashSet<Integer>();
 	protected int staffRFID;
 	protected int cubage;
 	protected Gson gson = new Gson();
 
-	public void addItem(Integer rfid) {
+	public void addItem(ItemInfoDO rfid) {
 		synchronized (itemRFIDs) {
 			getItemRFIDs().add(rfid);
 		}
@@ -27,7 +28,7 @@ public abstract class ModuleProperty implements PropertyCollector {
 		}
 	}
 
-	public boolean removeItem(Integer rfid) {
+	public boolean removeItem(ItemInfoDO rfid) {
 		synchronized (itemRFIDs) {
 		return getItemRFIDs().remove(rfid);
 		}
@@ -55,11 +56,11 @@ public abstract class ModuleProperty implements PropertyCollector {
 		this.rfid = rfid;
 	}
 
-	public Set<Integer> getItemRFIDs() {
+	public Set<ItemInfoDO> getItemRFIDs() {
 		return itemRFIDs;
 	}
 
-	public void setItemRFIDs(Set<Integer> itemRFIDs) {
+	public void setItemRFIDs(Set<ItemInfoDO> itemRFIDs) {
 		this.itemRFIDs = itemRFIDs;
 	}
 

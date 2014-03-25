@@ -144,7 +144,7 @@ public class DynamicStatusReader extends EquipmentObject<ReaderEquipmentProperty
 	}
 
 	@Override
-	public ChangerAnnouncerProperty[] getBufferedProperty() {
+	public ChangerAnnouncerProperty getBufferedProperty() {
 		return propertyBuffer.getBuffer();
 	}
 

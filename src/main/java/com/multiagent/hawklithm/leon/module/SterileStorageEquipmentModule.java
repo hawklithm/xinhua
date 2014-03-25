@@ -114,7 +114,8 @@ public class SterileStorageEquipmentModule extends EquipmentObject<SterileStorag
 	}
 	
 	@Override
-	public ChangerAnnouncerProperty[] getBufferedProperty() {
+	public ChangerAnnouncerProperty getBufferedProperty() {
+		propertyBuffer.markDown(moduleProperty.getRfid(), moduleProperty.getStaffRFID());
 		return propertyBuffer.getBuffer();
 	}
 

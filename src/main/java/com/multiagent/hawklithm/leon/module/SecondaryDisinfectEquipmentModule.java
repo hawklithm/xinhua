@@ -98,7 +98,8 @@ public class SecondaryDisinfectEquipmentModule extends EquipmentObject<Secondary
 	}
 	
 	@Override
-	public ChangerAnnouncerProperty[] getBufferedProperty() {
+	public ChangerAnnouncerProperty getBufferedProperty() {
+		propertyBuffer.markDown(moduleProperty.getRfid(), moduleProperty.getStaffRFID());
 		return propertyBuffer.getBuffer();
 	}
 
