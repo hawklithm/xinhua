@@ -170,7 +170,7 @@
 	</bean>
 		<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 	<property name="interfaceName"
-			value="com.mutiagent.hawklithm.item.interface4rpc.RPCItemInfoManagerInterface" />
+			value="com.multiagent.hawklithm.item.interface4rpc.RPCItemInfoManagerInterface" />
 		<property name="version" value="1.0.0.hawky" />
 		<property name="beanId" value="itemInfoManager" />
 		<property name="className"

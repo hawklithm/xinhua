@@ -1,10 +1,10 @@
-package com.mutiagent.hawklithm.item.manager;
+package com.multiagent.hawklithm.item.manager;
 
 import java.util.List;
 
 import com.multiagent.hawklithm.item.dao.IbatisItemInfoDAO;
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
-import com.mutiagent.hawklithm.item.interface4rpc.RPCItemInfoManagerInterface;
+import com.multiagent.hawklithm.item.interface4rpc.RPCItemInfoManagerInterface;
 
 public class ItemInfoManager implements RPCItemInfoManagerInterface{
 private IbatisItemInfoDAO itemInfoDao;

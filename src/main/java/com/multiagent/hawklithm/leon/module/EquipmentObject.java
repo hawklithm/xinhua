@@ -19,7 +19,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	private WardenManager wardenManager;
 	protected EquipmentPropertyChangerAnnouncerBuffer propertyBuffer=new EquipmentPropertyChangerAnnouncerBuffer();
 	protected T moduleProperty;
-	protected IbatisItemInfoDAO ibatisItemInfoDAO;
+	protected IbatisItemInfoDAO ibatisItemInfoDao;
 
 	/**
 	 * 设置设备属性
@@ -69,7 +69,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	public void addItem(int RFID) {
 //		itemRFIDs.add(Integer.valueOf(RFID));
 //		moduleProperty.getItemRFIDs().add(Integer.valueOf(RFID));
-		ItemInfoDO item=ibatisItemInfoDAO.queryById(RFID);
+		ItemInfoDO item=ibatisItemInfoDao.queryById(RFID);
 		moduleProperty.addItem(item);
 		propertyBuffer.addItem(item);
 	}
@@ -101,7 +101,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	}
 
 	public boolean removeItem(int RFID) {
-		ItemInfoDO item=ibatisItemInfoDAO.queryById(RFID);
+		ItemInfoDO item=ibatisItemInfoDao.queryById(RFID);
 		propertyBuffer.removeItem(item);
 		return moduleProperty.removeItem(item);
 //		return moduleProperty.getItemRFIDs().remove(Integer.valueOf(RFID));
@@ -205,12 +205,12 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 		this.moduleProperty = moduleProperty;
 	}
 
-	public IbatisItemInfoDAO getIbatisItemInfoDAO() {
-		return ibatisItemInfoDAO;
+	public IbatisItemInfoDAO getIbatisItemInfoDao() {
+		return ibatisItemInfoDao;
 	}
 
-	public void setIbatisItemInfoDAO(IbatisItemInfoDAO ibatisItemInfoDAO) {
-		this.ibatisItemInfoDAO = ibatisItemInfoDAO;
+	public void setIbatisItemInfoDao(IbatisItemInfoDAO ibatisItemInfoDao) {
+		this.ibatisItemInfoDao = ibatisItemInfoDao;
 	}
 
 

@@ -22,8 +22,8 @@ public class IbatisItemInfoDAO {
 		this.ibatisManager = ibatisManager;
 	}
 
-	public void submit(String itemName , Integer itemType, Integer hospitalId,
-			String manufacturer, boolean interconvertible,String remark) throws DataAccessException {
+	public void submit(String itemName, Integer itemType, Integer hospitalId, String manufacturer,
+			boolean interconvertible, String remark) throws DataAccessException {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("itemName", itemName);
 		paramMap.put("itemType", itemType);
@@ -34,6 +34,7 @@ public class IbatisItemInfoDAO {
 		ibatisManager.insert("IbatisItemInfoDAO.submit", paramMap);
 
 	}
+
 	public int deleteById(Integer itemId) throws DataAccessException {
 		Assert.notNull(itemId);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -41,9 +42,9 @@ public class IbatisItemInfoDAO {
 		return ibatisManager.delete("IbatisItemInfoDAO.deleteById", paramMap);
 	}
 
-	public List<ItemInfoDO> query(Integer itemId, Date startTime,Date endTime,
-			 Integer itemType,Integer hospitalId, String manufacturer,
-			boolean interconvertible, Integer offset,Integer length) throws DataAccessException {
+	public List<ItemInfoDO> query(Integer itemId, Date startTime, Date endTime, Integer itemType,
+			Integer hospitalId, String manufacturer, boolean interconvertible, Integer offset,
+			Integer length) throws DataAccessException {
 		Assert.notNull(length);
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("itemId", itemId);
@@ -57,16 +58,20 @@ public class IbatisItemInfoDAO {
 		paramMap.put("length", length);
 		return (List<ItemInfoDO>) ibatisManager.select("IbatisItemInfoDAO.query", paramMap);
 	}
-public ItemInfoDO queryById(Integer itemId){
-	Assert.notNull(itemId);
-	Map<String,Object> paramMap=new HashMap<String,Object>();
-	paramMap.put("itemId",itemId);
-	return (ItemInfoDO) ibatisManager.select("IbatisItemInfoDAO.queryById", paramMap);
-}
-public List<ItemInfoDO> queryByType(Integer itemType){
-	Assert.notNull(itemType);
-	Map<String,Object> paramMap=new HashMap<String,Object>();
-	paramMap.put("itemType",itemType);
-	return (List<ItemInfoDO>)ibatisManager.select("IbatisItemInfoDAO.queryByType", paramMap);
-}
+
+	public ItemInfoDO queryById(Integer itemId) {
+		Assert.notNull(itemId);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("itemId", itemId);
+		List<ItemInfoDO> list = (List<ItemInfoDO>) ibatisManager.select(
+				"IbatisItemInfoDAO.queryById", paramMap);
+		return list.get(0);
+	}
+
+	public List<ItemInfoDO> queryByType(Integer itemType) {
+		Assert.notNull(itemType);
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("itemType", itemType);
+		return (List<ItemInfoDO>) ibatisManager.select("IbatisItemInfoDAO.queryByType", paramMap);
+	}
 }

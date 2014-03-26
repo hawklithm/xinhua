@@ -1,4 +1,4 @@
-package com.mutiagent.hawklithm.item.interface4rpc;
+package com.multiagent.hawklithm.item.interface4rpc;
 
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 
