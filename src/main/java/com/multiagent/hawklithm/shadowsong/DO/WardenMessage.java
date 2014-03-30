@@ -42,6 +42,12 @@ public class WardenMessage extends Message {
 	 * 数据流向：出去
 	 */
 	public static String DIR_EXIT = "wm_exit";
+	
+	/**
+	 * 设备信息改变
+	 */
+	public static String KIND_MACHINE_INFO_CHANGE="kind_machine_info_change";
+	
 
 	// // RFID类型
 	// /**

@@ -15,4 +15,5 @@
 		<property name="staffValue"  value="(${rfid.limit.numpair.staffvalue.bottom},${rfid.limit.numpair.staffvalue.top})"/>
 		<property name="transValue"  value="(${rfid.limit.numpair.transvalue.bottom},${rfid.limit.numpair.transvalue.top})"/>
 	</bean>
+	<bean id="simpleMessageTransportBufferModule" class="com.multiagent.hawklithm.leon.module.SimpleMessageTransportBufferModule" init-method="initBuffer"/>
 </beans>

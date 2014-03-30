@@ -84,5 +84,8 @@
 
 	<!-- gps信息管理 -->
 	<bean id="gpsInfoManager" class="com.multiagent.hawklithm.gps.manager.GpsInfoManager" />
+	
+	<!-- 通知管理器 -->
+	<bean id="anouncementManager" class="com.multiagent.hawklithm.shadowsong.manager.AnouncementManager"/>
 
 </beans>

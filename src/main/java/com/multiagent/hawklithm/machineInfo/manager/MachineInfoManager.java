@@ -6,11 +6,14 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.util.Assert;
 
+import com.google.gson.Gson;
 import com.multiagent.hawklithm.machineInfo.DAO.IbatisEquipmentStaffMappingDAO;
 import com.multiagent.hawklithm.machineInfo.DAO.IbatisMachineInfoDAO;
 import com.multiagent.hawklithm.machineInfo.DO.EquipmentStaffMappingDO;
 import com.multiagent.hawklithm.machineInfo.DO.MachineInfoDO;
 import com.multiagent.hawklithm.machineInfo.interface4rpc.RPCMachineInfoManagerInterface;
+import com.multiagent.hawklithm.shadowsong.DO.WardenMessage;
+import com.multiagent.hawklithm.shadowsong.manager.WardenManager;
 
 /**
  * 
@@ -19,6 +22,8 @@ import com.multiagent.hawklithm.machineInfo.interface4rpc.RPCMachineInfoManagerI
 public class MachineInfoManager implements RPCMachineInfoManagerInterface {
 	private IbatisMachineInfoDAO ibatisMachineInfoDao;
 	private IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO;
+	private WardenManager wardenManager;
+	private Gson gson=new Gson();
 	
 	@Override
 	public Integer addEquipmentStaffMapping(Integer staffId,Integer equipmentId){
@@ -64,17 +69,28 @@ public class MachineInfoManager implements RPCMachineInfoManagerInterface {
 	public boolean equipmentDetailDeleteById(int id) throws DataAccessException {
 		return ibatisMachineInfoDao.equipmentDetailDeleteById(id)!= 0;
 	}
+	private void sendOutMachineDetailChangeAnnouncement(String note){
+		WardenMessage message =new WardenMessage();
+		message.setKind(WardenMessage.KIND_MACHINE_INFO_CHANGE);
+		message.setTarget(WardenMessage.TARGET_TYPE_SYSTEM_MODULE);
+		message.setNote(note);
+		wardenManager.push(message);
+	}
 
 	@Override
 	public boolean equipmentDetailModify(Integer id,  Date gmtLastRepair, 
 			   String detail) throws DataAccessException {
-		return ibatisMachineInfoDao.equipmentDetailModify(id, gmtLastRepair, detail) != 0;
+		//TODO 发送详情变化通知
+		 boolean ans=ibatisMachineInfoDao.equipmentDetailModify(id, gmtLastRepair, detail) != 0;
+		 MachineInfoDO machineInfo=ibatisMachineInfoDao.equipmentDetailQuery(id, null, null, null, null, null, null, null, null, 0, 1).get(0);
+		 sendOutMachineDetailChangeAnnouncement(gson.toJson(machineInfo));
+		 return ans;
 	}
 
 	@Override
 	public MachineInfoDO[] queryById(int id) throws DataAccessException {
 		List<MachineInfoDO> ret = ibatisMachineInfoDao.equipmentDetailQuery(id, null, null, null, null, null,
-				null, null, null, null, null);
+				null, null, null, 0, 1);
 		return ret.toArray(new MachineInfoDO[ret.size()]);
 	}
 
@@ -126,6 +142,14 @@ public class MachineInfoManager implements RPCMachineInfoManagerInterface {
 	public void setIbatisEquipmentStaffMappingDAO(
 			IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO) {
 		this.ibatisEquipmentStaffMappingDAO = ibatisEquipmentStaffMappingDAO;
+	}
+
+	public WardenManager getWardenManager() {
+		return wardenManager;
+	}
+
+	public void setWardenManager(WardenManager wardenManager) {
+		this.wardenManager = wardenManager;
 	}
 
 }
