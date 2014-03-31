@@ -180,11 +180,11 @@
 	</bean>
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
-			value="com.multiagent.hawklithm.shadowsong.manager.interface4rpc.RPCAnouncementManager" />
+			value="com.multiagent.hawklithm.shadowsong.manager.interface4rpc.RPCAnnouncementManager" />
 		<property name="version" value="1.0.0.hawky" />
-		<property name="beanId" value="anouncementManager" />
+		<property name="beanId" value="announcementManager" />
 		<property name="className"
-			value="com.multiagent.hawklithm.shadowsong.manager.AnouncementManager" />
+			value="com.multiagent.hawklithm.shadowsong.manager.AnnouncementManager" />
 		<property name="comment" value="通知信息管理" />
 		<property name="visible" value="true" />
 	</bean>

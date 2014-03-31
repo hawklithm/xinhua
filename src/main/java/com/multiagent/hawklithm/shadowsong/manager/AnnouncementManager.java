@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.multiagent.hawklithm.leon.module.SimpleMessageTransportBufferModule;
 import com.multiagent.hawklithm.leon.module.SimpleMessageTransportBufferModule.SimpleMessage;
-import com.multiagent.hawklithm.shadowsong.manager.interface4rpc.RPCAnouncementManager;
+import com.multiagent.hawklithm.shadowsong.manager.interface4rpc.RPCAnnouncementManager;
 
-public class AnouncementManager implements RPCAnouncementManager{
+public class AnnouncementManager implements RPCAnnouncementManager{
 	private SimpleMessageTransportBufferModule simpleMessageTransportBufferModule;
 	
 	@Override

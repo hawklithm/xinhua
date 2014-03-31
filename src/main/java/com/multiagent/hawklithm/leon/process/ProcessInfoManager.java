@@ -1,5 +1,6 @@
 package com.multiagent.hawklithm.leon.process;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,7 @@ public class ProcessInfoManager implements RPCProcessInfoManagerInterface {
 //			ret[i]= new ChangerAnnouncerPropertyArrayVersion[l];
 //			for (int j=0;j<l;j++){
 					ret[i]=new ChangerAnnouncerPropertyArrayVersion(list.get(i));
+					ret[i].setTimeStamp(new Date());
 //			}
 		}
 		return ret;
