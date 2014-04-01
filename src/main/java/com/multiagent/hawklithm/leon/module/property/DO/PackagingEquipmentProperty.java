@@ -1,4 +1,7 @@
 package com.multiagent.hawklithm.leon.module.property.DO;
+
+import com.hawklithm.utils.Jsoner;
+
 /**
  * 打包模块属性
  * @author hawklithm
@@ -8,7 +11,7 @@ public class PackagingEquipmentProperty extends ModuleProperty{
 
 	@Override
 	public String getProperty() {
-		return this.getInfoInStringFormat();
+		return Jsoner.toJson(this);
 	}
 
 }

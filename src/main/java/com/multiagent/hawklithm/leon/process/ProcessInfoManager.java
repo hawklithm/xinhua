@@ -65,15 +65,10 @@ public class ProcessInfoManager implements RPCProcessInfoManagerInterface {
 		//TODO 这里要把list从ChangerAnnouncerProperty转成ChangerAnnouncerPropertyArrayVersion，防止RPC调用参数出现问题
 		ChangerAnnouncerPropertyArrayVersion[] ret=new ChangerAnnouncerPropertyArrayVersion[list.size()];
 		int length=list.size();
-		for (int i=0;i<length;i++){
-//			int l=list.get(i).length;
-//			ret[i]= new ChangerAnnouncerPropertyArrayVersion[l];
-//			for (int j=0;j<l;j++){
-					ret[i]=new ChangerAnnouncerPropertyArrayVersion(list.get(i));
-					ret[i].setTimeStamp(new Date());
-//			}
+		for (int i = 0; i < length; i++) {
+			ret[i] = new ChangerAnnouncerPropertyArrayVersion(list.get(i));
+			ret[i].setTimeStamp(new Date());
 		}
 		return ret;
-//		return list.toArray(new ChangerAnnouncerProperty[list.size()][]);
 	}
 }

@@ -1,4 +1,7 @@
 package com.multiagent.hawklithm.leon.module.property.DO;
+
+import com.hawklithm.utils.Jsoner;
+
 /**
  * 二次消毒模块属性
  * @author hawklithm
@@ -21,6 +24,6 @@ public class SecondaryDisinfectEquipmentProperty extends ModuleProperty {
 	}
 	@Override
 	public String getProperty() {
-		return this.getInfoInStringFormat();
+		return Jsoner.toJson(this);
 	}
 }

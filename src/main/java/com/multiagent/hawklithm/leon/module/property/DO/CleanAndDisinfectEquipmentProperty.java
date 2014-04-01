@@ -1,4 +1,7 @@
 package com.multiagent.hawklithm.leon.module.property.DO;
+
+import com.hawklithm.utils.Jsoner;
+
 /**
  * 清洗消毒模块属性
  * @author hawklithm
@@ -21,7 +24,7 @@ public class CleanAndDisinfectEquipmentProperty extends ModuleProperty {
 	}
 	@Override
 	public String getProperty() {
-		// TODO Auto-generated method stub
-		return this.getInfoInStringFormat();
+//		return this.getInfoInStringFormat();
+		return Jsoner.toJson(this);
 	}
 }

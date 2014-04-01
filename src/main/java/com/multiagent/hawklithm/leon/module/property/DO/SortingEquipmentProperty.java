@@ -1,4 +1,7 @@
 package com.multiagent.hawklithm.leon.module.property.DO;
+
+import com.hawklithm.utils.Jsoner;
+
 /**
  * ·Ö¼ðÄ£¿éÊôÐÔ
  * @author hawklithm
@@ -7,6 +10,6 @@ package com.multiagent.hawklithm.leon.module.property.DO;
 public class SortingEquipmentProperty extends ModuleProperty{
 	@Override
 	public String getProperty() {
-		return this.getInfoInStringFormat();
+		return Jsoner.toJson(this);
 	}
 }

@@ -3,8 +3,6 @@ package com.multiagent.hawklithm.leon.module.property.DO;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.util.CollectionUtils;
-
 import com.google.gson.Gson;
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 
@@ -13,7 +11,9 @@ public abstract class ModuleProperty implements PropertyCollector {
 	protected Set<ItemInfoDO> itemRFIDs=new HashSet<ItemInfoDO>();
 	protected Set<Integer> packageRFIDs=new HashSet<Integer>();
 	protected int staffRFID;
-	protected int cubage;
+//	protected int cubage;
+	protected String detail;
+	protected String manufacture;
 	protected Gson gson = new Gson();
 
 	public void addItem(ItemInfoDO rfid) {
@@ -71,26 +71,43 @@ public abstract class ModuleProperty implements PropertyCollector {
 	public void setStaffRFID(int staffRFID) {
 		this.staffRFID = staffRFID;
 	}
-
-	public int getCubage() {
-		return cubage;
-	}
-
-	public void setCubage(int cubage) {
-		this.cubage = cubage;
-	}
+//
+//	public int getCubage() {
+//		return cubage;
+//	}
+//
+//	public void setCubage(int cubage) {
+//		this.cubage = cubage;
+//	}
 
 	protected String getInfoInStringFormat() {
-		String msg = "module RFID: " + this.getRfid() + ", staffRFID: " + this.getStaffRFID()
-				+ ", Cubage: " + this.getCubage();
-		if (!CollectionUtils.isEmpty(getItemRFIDs())) {
-			msg += ", item amount: " + this.getItemRFIDs().size();
-			msg += ", item RFID: " + gson.toJson(this.getItemRFIDs());
-		}
-		if (!CollectionUtils.isEmpty(getPackageRFIDs())) {
-			msg += ", package amount: ";
-			msg += ", package RFID: " + gson.toJson(this.getPackageRFIDs());
-		}
-		return msg;
+//		String msg = "module RFID: " + this.getRfid() + ", staffRFID: " + this.getStaffRFID()
+//				+ ", Cubage: " + this.getCubage();
+//		if (!CollectionUtils.isEmpty(getItemRFIDs())) {
+//			msg += ", item amount: " + this.getItemRFIDs().size();
+//			msg += ", item RFID: " + gson.toJson(this.getItemRFIDs());
+//		}
+//		if (!CollectionUtils.isEmpty(getPackageRFIDs())) {
+//			msg += ", package amount: ";
+//			msg += ", package RFID: " + gson.toJson(this.getPackageRFIDs());
+//		}
+//		return msg;
+		return detail;
+	}
+
+	public String getManufacture() {
+		return manufacture;
+	}
+
+	public void setManufacture(String manufacture) {
+		this.manufacture = manufacture;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
 	}
 }

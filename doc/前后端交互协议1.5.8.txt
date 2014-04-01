@@ -149,6 +149,8 @@ FrontEndingRequestTransport
 		"gmtBuyEnd":查询购买时间的结束时间,Date
 		"gmtLastRepairStart":查询上次维修时间的开始时间,Date
 		"gmtLastRepairEnd":查询上次维修时间的结束时间,Date
+		"gmtModified":修改时间,Date
+		"gmtCreate":创建时间,Date
 	}
 }
 车辆信息

@@ -1,4 +1,7 @@
 package com.multiagent.hawklithm.leon.module.property.DO;
+
+import com.hawklithm.utils.Jsoner;
+
 /**
  * ÎÞ¾ú´¢²ØÄ£¿éÊôÐÔ
  * @author hawklithm
@@ -7,6 +10,6 @@ package com.multiagent.hawklithm.leon.module.property.DO;
 public class SterileStorageEquipmentProperty extends ModuleProperty {
 	@Override
 	public String getProperty() {
-		return this.getInfoInStringFormat();
+		return Jsoner.toJson(this);
 	}
 }

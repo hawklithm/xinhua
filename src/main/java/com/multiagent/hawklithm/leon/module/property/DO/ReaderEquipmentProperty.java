@@ -1,4 +1,7 @@
 package com.multiagent.hawklithm.leon.module.property.DO;
+
+import com.hawklithm.utils.Jsoner;
+
 /**
  * ¶Á¿¨Æ÷Ä£¿éÊôÐÔ
  * @author hawklithm
@@ -12,7 +15,7 @@ public class ReaderEquipmentProperty extends ModuleProperty{
 	private String targetMessageDir = "";
 	@Override
 	public String getProperty() {
-		return this.getInfoInStringFormat();
+		return Jsoner.toJson(this);
 	}
 	public int getTargetRFID() {
 		return targetRFID;
