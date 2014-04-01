@@ -15,26 +15,26 @@ import com.multiagent.hawklithm.shadowsong.manager.WardenOperator;
 public class SimpleMessageTransportBufferModule implements Module<List<SimpleMessageTransportBufferModule.SimpleMessage>>, WardenOperator<WardenMessage>{
 	
 	public class SimpleMessage{
-		private Date time;
+		private Date timeStamp;
 		private String message;
 		public SimpleMessage() {
 			
 		}
 		public SimpleMessage(Date time,String message){
-			this.time=time;
+			this.timeStamp=time;
 			this.message=message;
-		}
-		public Date getTime() {
-			return time;
-		}
-		public void setTime(Date time) {
-			this.time = time;
 		}
 		public String getMessage() {
 			return message;
 		}
 		public void setMessage(String message) {
 			this.message = message;
+		}
+		public Date getTimeStamp() {
+			return timeStamp;
+		}
+		public void setTimeStamp(Date timeStamp) {
+			this.timeStamp = timeStamp;
 		}
 	}
 	private Gson gson=new Gson();

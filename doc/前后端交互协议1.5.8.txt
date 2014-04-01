@@ -1,0 +1,246 @@
+18:48 14/01/25 在运单信息中，添加"currentAddress":当前地点,String，"orderStatus":订单状态,Integer
+15:43 14/01/31 在运单信息中的subs中添加gps信息，字段名:"gps",为数组类型
+20:09 2014/2/23 星期日 添加实时信息获取的交互协议
+流水信息添加：
+		"processName":过程名,String,
+		"realTime":信息产生时间,Date
+查询流水信息的时候 FrontEndingCommunicationProtocol的tableType字段用来表示具体要查询的流水信息的类型
+用户信息添加创建时间和修改时间
+
+修改流水信息协议，适应设备流水信息、器械流水信息、手术包流水信息
+
+添加设备人员映射消息EquipmentStaffMapping
+
+15:03 2014/3/20 星期四 流水信息中的staffId改为staffInfo，表示员工信息;流水信息中的realTime更名为time
+
+		
+10:42 2014/4/1 星期二 添加实时信息获取中的通知信息协议
+		
+web 协议：
+Cerberus与前端通信协议：
+class FrontEndingCommunicationProtocol<T>
+包含字段
+{
+	"condition":{
+	　　"operateType":操作类型,string:"operateType","tableType","status","length","offset","ok","fail"
+	　　"tableType":将要被操作的表名(如流水信息，用来表示流水信息的具体类型："package","item"),string
+	　　"status":返回状态，表示操作是否成功,string
+	　　"offset":偏移量,integer
+		"length":长度,integer
+	},
+	"rows":[
+		多组数据，根据T的类型来确定
+	]
+}
+
+T可选类型：
+订单信息
+FrontEndingRequestOrder
+{
+	"main":{
+		"orderId":订单ID,integer
+		"userId":用户ID,integer
+		"hospitalName":医院名称,String
+		"startDay":开始时间，查询下单时间时使用,date
+		"endDay":结束时间，查询下单时使用,date
+		"orderTime":下单时间,date
+		"outStorageTime":出库时间,date
+		"reclaimTime":回收时间,date
+		"signedTime":签收时间,date
+		"assortingTime":配货时间,date
+		"orderStatus":订单状态,String["已回收"|"已入库"|"已配货"|"已签收"]
+		"expectReceiveTime":期望收到时间,date
+		"level":优先级,integer
+		"orderNote":备注,string
+	},
+	"subs":[
+	{
+		"parentId":父订单id,integer
+		"packageType":包类型,integer
+		"packageAmount":包数量,integer
+	},
+	{......},
+	..........
+	],
+	"reflects":[
+	{
+		"parentId":父订单id,integer
+		"itemType":器械类型,integer
+		"itemAmount":器械数量,integer
+	},
+	{...........},
+	.........
+	]
+}
+运单信息
+FrontEndingRequestTransport
+{
+	"main":{
+		"id":运单ID,integer
+		"orderId":对应订单ID,integer
+		"startTime":运单开始时间,date
+		"finishTime":运单完成时间,date
+		"startAddress":发货地址,string
+		"endAddress":收货地址,string
+		"vehicleId":该字段仅用于查询，表示交通工具编号,integer
+		"currentAddress":当前地点,String
+		"orderStatus":订单状态,Integer
+	},
+	"subs":[
+	{
+		"id":子运单id,integer
+		"parentId":父运单id,integer
+		"subOrderId":对应的子订单id,这一项在订单装箱的时候去决定,一个子订单对应一个子运单,integer
+		"vehicleId":运输工具id,integer
+		"gps":gps信息,
+			[
+				{
+					"vehicleId":运输工具编号,Integer
+					"longitude":经度,double;
+					"latitude":纬度,double;
+					"stationName":当前位置,String;
+					"time":时间,Date;
+				{
+				....
+				},
+				.....
+			]
+	},
+	{......},
+	....
+	]
+}
+用户信息
+{
+	"condition":{
+		"userId":用户id,integer
+		"userName":用户名,string
+		"password":密码,string
+		"isEmployee":是否员工账号,boolean
+		"hospitalId":医院id,integer
+		"role":权限,string
+		"enable":账号是否启用,boolean
+		"modifiedTime":上次修改时间,Date
+		"createdTime":创建时间,Date
+	}
+}
+医院信息
+{
+	"condition":{
+		"hospitalId":医院id,integer
+		"hospitalName":医院名称,string
+		"hospitalLevel":医院优先级,integer
+		"hospitalAddress":医院地址，string
+		"hospitalAgent":医院代理人，String
+		"agentPhone":代理人电话,String
+	}
+}
+设备信息
+{
+	"condition":{
+		"id":id，这个id是在表里面的id，Integer
+		"gmtBuy":购买时间,Date
+		"gmtLastRepair":上次修理时间,Date
+		"machineNumber":机器编号，String
+		"equipmentId":设备id,Integer
+		"manufacturer":制造商,String
+		"detail":详情,String
+		"gmtBuyStart":查询购买时间的开始时间,Date
+		"gmtBuyEnd":查询购买时间的结束时间,Date
+		"gmtLastRepairStart":查询上次维修时间的开始时间,Date
+		"gmtLastRepairEnd":查询上次维修时间的结束时间,Date
+	}
+}
+车辆信息
+{
+	"condition":{
+		"vehicleId":车辆id,Integer,
+		"vehicleType":车辆类型,String,
+		"vehicleLevel":车辆优先级,Integer,
+		"vehicleCapacity":车辆容量,Double
+	}
+}
+员工信息
+{
+	"condition":{
+		"staffId":员工id,Integer,
+		"staffName":员工名字，String,
+		"staffPhoneNumber"：员工电话,String,
+		"staffGender":员工性别,String,
+		"staffAge":员工年龄,Integer,
+		"staffDepartmentId":员工所属部门编号,String,
+		"staffAgeStart":查询时使用，员工年龄开始,Integer,
+		"staffAgeEnd":查询时使用，员工年龄结束,Integer
+	}
+}
+流水信息
+{
+	"condition":{
+		"infoType":信息类型，设备流水信息:"equipmentHistory",器械流水信息:"itemHistory",手术包流水信息:"packageHistory"
+		"recordId":信息id,Integer
+		"startTime",开始时间，用于根据时间查询,Date,
+		"endTime",结束时间，用于根据时间查询,Date,
+		"equipmentId",设备id,Integer,
+		"objectId",对象id,Integer,
+		"objectType":器械类型,String,
+		"readerId",读卡器id,Integer,
+		"cameraId",相机id,Integer,
+		"staffInfo",员工信息,String,
+		"processName":过程名,String,
+		"time":信息产生时间,Date
+		"objectStatus":状态信息，String
+	}
+	
+}
+实时信息获取
+{
+	"condition":{
+		"processName":过程名,String
+		"id":机器编号,Integer
+		"retValue":[
+			每个表示一条(详情见实时信息中的retValue包含项)
+		]
+	}
+}
+
+
+
+
+app协议
+{
+	"targetUrl":目标地址,String,用于区分调用哪个模块
+	"status":返回状态,String
+	"content":json串,String
+	"authenticate":认证字段,String
+	"response":返回json串,String
+}
+
+
+设备人员映射信息的operateType为：增："operate_add_mapping",删："operate_delete_mapping",改："operate_update_mapping"，查："operate_query_mapping";
+EquipmentStaffMapping设备人员映射信息
+{
+	"condition":{
+		"id":条目编号,Integer
+		"gmtCreate":条目创建时间,Date
+		"gmtModified":条目修改时间,Date
+		"equipmentId":设备编号,Integer
+		"staffId":员工编号,Integer
+	}
+}
+
+实时信息中的retValue包含项
+设备处理情况信息
+{
+	"itemAdd":[]ItemInfoDO数组，表示进入机器的器械信息
+	"itemRemove":[]ItemInfoDO数组，表示离开机器的器械信息
+	"packageAdd":[]PackageInfoDO数组,暂时先不解析，表示进入机器的手术包信息
+	"packageRemove":[]PackageInfoDO数组，暂时先不解析，表示离开机器的手术包信息
+	"machineRFID":Integer,设备rfid
+	"staffRFID":Integer,员工rfid
+	"timeStamp":Date,时间
+}
+通知
+{
+	"timeStamp":Date,时间
+	"message":String,消息
+}
