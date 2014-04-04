@@ -215,6 +215,7 @@ app协议
 	"content":json串,String
 	"authenticate":认证字段,String
 	"response":返回json串,String
+	"keepAlive":是否需要持续信息传输(是否长连接),String
 }
 
 
