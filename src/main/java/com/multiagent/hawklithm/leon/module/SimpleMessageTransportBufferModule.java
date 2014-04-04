@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.google.gson.Gson;
-import com.multiagent.hawklithm.leon.module.SimpleMessageTransportBufferModule.SimpleMessage;
 import com.multiagent.hawklithm.machineInfo.DO.MachineInfoDO;
 import com.multiagent.hawklithm.shadowsong.DO.Warden;
 import com.multiagent.hawklithm.shadowsong.DO.WardenMessage;
 import com.multiagent.hawklithm.shadowsong.manager.WardenManager;
 import com.multiagent.hawklithm.shadowsong.manager.WardenOperator;
 
-public class SimpleMessageTransportBufferModule implements Module<List<SimpleMessageTransportBufferModule.SimpleMessage>>, WardenOperator<SimpleMessage>{
+public class SimpleMessageTransportBufferModule implements Module<List<SimpleMessageTransportBufferModule.SimpleMessage>>, WardenOperator<MachineInfoDO>{
 	
 	public class SimpleMessage{
 		private Date timeStamp;
@@ -40,7 +39,7 @@ public class SimpleMessageTransportBufferModule implements Module<List<SimpleMes
 	}
 	private Gson gson=new Gson();
 	private WardenManager wardenManager;
-
+	
 	private ConcurrentLinkedQueue<SimpleMessage> buffer=new ConcurrentLinkedQueue<SimpleMessage>();
 	
 	public void initBuffer(){
@@ -86,11 +85,15 @@ public class SimpleMessageTransportBufferModule implements Module<List<SimpleMes
 		this.wardenManager = wardenManager;
 	}
 
-
+/**
+ * 推送消息发送功能，这里需要把message封装到WardenMessage里面
+ */
 	@Override
-	public void sendOutMessage(SimpleMessage message) {
-		// TODO 完成推送消息发送功能，这里需要把message封装到WardenMessage里面
-		
+	public void sendOutMessage(MachineInfoDO message) {
+		WardenMessage wardenMessage =new WardenMessage();
+		wardenMessage.setNote(gson.toJson(message));
+		wardenMessage.setTarget(WardenMessage.TARGET_TYPE_SYSTEM_MODULE);
+		wardenMessage.setKind(WardenMessage.KIND_MACHINE_INFO_CHANGE);
 	}
 
 

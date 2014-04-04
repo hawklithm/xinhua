@@ -199,6 +199,7 @@ FrontEndingRequestTransport
 	"condition":{
 		"processName":过程名,String
 		"id":机器编号,Integer
+		"message":仅用于通知消息，表示通知消息内容(class MachineInfoDO)，String
 		"retValue":[
 			每个表示一条(详情见实时信息中的retValue包含项)
 		]
