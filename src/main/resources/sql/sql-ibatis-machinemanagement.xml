@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="machineManagement">
+	<resultMap class="com.multiagent.hawklithm.machineInfo.DO.MachineInfoDO"
+		id="machineManagement">
+		<result property="id" column="id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="gmtBuy" column="gmt_buy" />
+		<result property="gmtLastRepair" column="gmt_last_repair" />
+		<result property="equipmentId" column="equipment_id" />
+		<result property="manufacturer" column="manufacturer" />
+		<result property="detail" column="detail" />
+		<result property="equipmentType" column="equipment_type" />
+	</resultMap>
+	<resultMap class="com.multiagent.hawklithm.machineInfo.DO.EquipmentStaffMappingDO"
+		id="equipmentStaffMapping">
+		<result property="id" column="id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="equipmentId" column="equipment_id" />
+		<result property="staffId" column="staff_id" />
+	</resultMap>
+	<insert id="IbatisMachineInfoDAO.equipmentDetailSubmit" parameterClass="java.util.Map">
+		insert into
+		tb_equipment_detail(gmt_create,gmt_modified,gmt_buy,equipment_id,manufacturer,equipment_type
+		<dynamic>
+			<isNotNull property="gmtLastRepair" prepend=",">
+				gmt_last_repair
+			</isNotNull>
+			<isNotNull property="detail" prepend=",">
+				detail
+			</isNotNull>
+		</dynamic>
+		)
+		values(
+		now(),now(),#gmtBuy#,#equipmentId#,#manufacturer#,#equipmentType#
+		<dynamic>
+			<isNotNull property="gmtLastRepair" prepend=",">
+				#gmtLastRepair#
+			</isNotNull>
+			<isNotNull property="detail" prepend=",">
+				#detail#
+			</isNotNull>
+		</dynamic>
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<update id="IbatisMachineInfoDAO.equipmentDetailModify" parameterClass="java.util.Map">
+		update tb_equipment_detail set gmt_modified=now()
+		<dynamic>
+			<isNotNull property="gmtLastRepair" prepend=",">
+				gmt_last_repair=#gmtLastRepair#
+			</isNotNull>
+			<isNotNull property="detail" prepend=",">
+				detail=#detail#
+			</isNotNull>
+		</dynamic>
+		where id=#id#
+	</update>
+	<delete id="IbatisMachineInfoDAO.equipmentDetailDeleteById" parameterClass="java.util.Map">
+		delete from tb_equipment_detail where id=#id#
+	</delete>
+	<select id="IbatisMachineInfoDAO.equipmentDetailQuery" parameterClass="java.util.Map"
+		resultMap="machineManagement">
+		select
+		id,gmt_create,gmt_modified,gmt_buy,gmt_last_repair,equipment_id,manufacturer,detail,equipment_type
+		from tb_equipment_detail
+		<dynamic prepend="where">
+			<isNotNull property="id" prepend="and">
+				id=#id#
+			</isNotNull>
+			<isNotNull property="gmtBuyStart" prepend="and">
+				<![CDATA[ gmt_buy>=#gmtBuyStart#]]>
+			</isNotNull>
+			<isNotNull property="gmtBuyEnd" prepend="and">
+				<![CDATA[ gmt_buy<=#gmtBuyEnd#]]>
+			</isNotNull>
+			<isNotNull property="gmtLastRepairStart" prepend="and">
+				<![CDATA[gmt_last_repair>=#gmtLastRepairStart#]]>
+			</isNotNull>
+			<isNotNull property="gmtLastRepairEnd" prepend="and">
+				<![CDATA[gmt_last_repair<=#gmtLastRepairEnd#]]>
+			</isNotNull>
+			<isNotNull property="equimpmentId" prepend="and">
+				equipment_id=#equimpmentId#
+			</isNotNull>
+			<isNotNull property="manufacturer" prepend="and">
+				manufacturer=#manufacturer#
+			</isNotNull>
+			<isNotNull property="detail" prepend="and">
+				detail=#detail#
+			</isNotNull>
+			<isNotNull property="equipmentType" prepend="and">
+				equipment_type=#equipmentType#
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="limit">
+			<isNotNull property="offset">
+				#offset#,
+			</isNotNull>
+			<isNotNull property="length">
+				#length#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<insert id="IbatisEquipmentStaffMappingDAO.insertMapping" parameterClass="java.util.Map">
+		insert into
+		tb_equipment_staff_mapping(gmt_create,gmt_modified,staff_id,equipment_id)
+		values(now(),now(),#staffId#,#equipmentId#)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<delete id="IbatisEquipmentStaffMappingDAO.deleteMapping" parameterClass="java.util.Map">
+		delete from tb_equipment_staff_mapping where id=#id#
+	</delete>
+	<update id="IbatisEquipmentStaffMappingDAO.modifyMapping" parameterClass="java.util.Map">
+		update tb_equipment_staff_mapping set gmt_modified=now()
+		<dynamic>
+			<isNotNull property="equipmentId" prepend=",">
+				equipment_id=#equipmentId#
+			</isNotNull>
+			<isNotNull property="staffId" prepend=",">
+				staff_id=#staffId#
+			</isNotNull>
+		</dynamic>
+		where id=#id#
+	</update>
+	<select id="IbatisEquipmentStaffMappingDAO.queryMapping" parameterClass="java.util.Map" resultMap="equipmentStaffMapping">
+		select id,gmt_create,gmt_modified,equipment_id,staff_id from tb_equipment_staff_mapping
+		<dynamic prepend="where">
+			<isNotNull property="equipmentId" prepend="and">
+				equipment_id=#equipmentId#
+			</isNotNull>
+			<isNotNull property="staffId" prepend="and">
+				staff_id=#staffId#
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="limit">
+			<isNotNull property="offset">
+				#offset#,
+			</isNotNull>
+			<isNotNull property="length">
+				#length#
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+</sqlMap>

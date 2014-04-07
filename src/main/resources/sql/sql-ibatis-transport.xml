@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="transportOrder">
+	<resultMap id="transportMainOrder"
+		class="com.multiagent.hawklithm.transport.DO.SqlTransportMainOrderDO">
+		<result property="id" column="id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="orderId" column="order_id" />
+		<result property="startTime" column="start_time" />
+		<result property="finishTime" column="finish_time" />
+		<result property="startAddress" column="start_address" />
+		<result property="endAddress" column="end_address" />
+	</resultMap>
+	<resultMap id="transportSubOrder"
+		class="com.multiagent.hawklithm.transport.DO.SqlTransportSubOrderDO">
+		<result property="id" column="id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="parentId" column="parent_id" />
+		<result property="vehicleId" column="vehicle_id" />
+		<result property="subOrderId" column="sub_order_id" />
+	</resultMap>
+	<select id="TransportOrderDataOperation.selectTransportMainOrder"
+		parameterClass="java.util.Map" resultMap="transportMainOrder">
+		select
+		id,gmt_create,gmt_modified,order_id,start_time,finish_time,start_address,end_address
+		from
+		tb_transport
+		<dynamic prepend="where">
+			<isNotNull property="id" prepend="and">
+				id=#id#
+			</isNotNull>
+			<isNotNull property="orderId" prepend="and">
+				order_id=#orderId#
+			</isNotNull>
+			<isNotNull property="startTime" prepend="and">
+				<![CDATA[	start_time>=#startTime# ]]>
+			</isNotNull>
+			<isNotNull property="finishTime" prepend="and">
+				<![CDATA[	finish_time<=#finishTime#]]>
+			</isNotNull>
+			<isNotNull property="startAddress" prepend="and">
+				start_address=#startAddress#
+			</isNotNull>
+			<isNotNull property="endAddress" prepend="and">
+				end_address=#endAddress#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="TransportOrderDataOperation.selectTransportSubOrder"
+		parameterClass="java.util.Map" resultMap="transportSubOrder">
+		select
+		id,gmt_create,gmt_modified,parent_id,vehicle_id,sub_order_id
+		from
+		tb_sub_transport
+		<dynamic prepend="where">
+			<isNotNull property="parentId" prepend="and">
+				parent_id=#parentId#
+			</isNotNull>
+			<isNotNull property="vehicleId" prepend="and">
+				vehicle_id=#vehicleId#
+			</isNotNull>
+			<isNotNull property="subOrderId" prepend="and">
+				sub_order_id=#subOrderId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<insert id="TransportOrderDataOperation.insertTransportMainOrder"
+		parameterClass="java.util.Map">
+		insert into
+		tb_transport(gmt_create,gmt_modified,order_id,start_address,end_address
+		<dynamic prepend="">
+			<isNotNull property="startTime" prepend=",">
+				start_time
+			</isNotNull>
+			<isNotNull property="finishTime" prepend=",">
+				finish_time
+			</isNotNull>
+		</dynamic>
+		)values(
+		now(),now(),#orderId#,#startAddress#,#endAddress#
+		<dynamic prepend="">
+			<isNotNull property="startTime" prepend=",">
+				#startTime#
+			</isNotNull>
+			<isNotNull property="finishTime" prepend=",">
+				#finishTime#
+			</isNotNull>
+		</dynamic>
+		)
+	</insert>
+	<insert id="TransportOrderDataOperation.insertTransportSubOrder"
+		parameterClass="java.util.Map">
+		insert into tb_sub_transport(
+		gmt_create,gmt_modified,parent_id,vehicle_id,sub_order_id
+		)values(
+		now(),now(),#parentId#,#vehicleId#,#subOrderId#
+		)
+	</insert>
+	<delete id="TransportOrderDataOperation.deleteTransportSubOrderById"
+		parameterClass="java.util.Map">
+		delete from tb_sub_transport where parent_id=#parentId#
+	</delete>
+	<delete id="TransportOrderDataOperation.deleteTransportMainOrderById"
+		parameterClass="java.util.Map">
+		delete from tb_transport where id=#orderId#
+	</delete>
+</sqlMap>

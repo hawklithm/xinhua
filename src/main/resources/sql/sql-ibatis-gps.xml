@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="gpsInfo">
+	<resultMap class="com.multiagent.hawklithm.gps.DO.GpsInfoDO"
+		id="gpsInfo">
+		<result property="gpsId" column="gps_id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="vehicleId" column="vehicle_id" />
+		<result property="longitude" column="longitude" />
+		<result property="latitude" column="latitude" />
+		<result property="stationName" column="station_name" />
+		<result property="subTransId" column="sub_trans_id"/>
+		<result property="time" column="time" />
+	</resultMap>
+	<select id="GpsInfoDAO.select" parameterClass="java.util.Map"
+		resultMap="gpsInfo">
+		select
+		gps_id,gmt_create,gmt_modified,vehicle_id,longitude,latitude,station_name,time,sub_trans_id
+		from tb_gps
+		where sub_trans_id=#subTransId#
+	</select>
+	<delete id="GpsInfoDAO.delete" parameterClass="java.util.Map">
+		delete from tb_gps
+		where gps_id=#gpsId#
+	</delete>
+	<insert id="GpsInfoDAO.insert" parameterClass="java.util.Map">
+		insert into tb_gps(
+		vehicle_id,longitude,latitude
+		<dynamic>
+			<isNotNull property="stationName" prepend=",">
+				station_name
+			</isNotNull>
+		</dynamic>
+		,time,sub_trans_id
+		)
+		values(#vehicleId#,#longitude#,#latitude#
+		<dynamic>
+			<isNotNull property="stationName" prepend=",">
+				#stationName#
+			</isNotNull>
+		</dynamic>
+		,#time#,#subTransId#
+		)
+	</insert>
+</sqlMap>

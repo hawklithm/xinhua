@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="userInfo">
+	<resultMap id="userInfoDO"
+		class="com.multiagent.hawklithm.user.DO.SqlUserInfoDO">
+		<result property="userId" column="user_id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="userName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="level" column="level" />
+		<result property="isEmployee" column="is_employee" />
+		<result property="hospitalId" column="hospital_id " />
+		<result property="enable" column="enable" />
+	</resultMap>
+	<delete id="UserInfoIbatisDAO.deleteById" parameterClass="java.util.Map">
+		delete
+		from tb_user_privilege where user_id=#userId#
+	</delete>
+	<select id="UserInfoIbatisDAO.selectUserRole" parameterClass="java.util.Map"
+		resultClass="java.lang.String">
+		select authority from tb_user_privilege
+		where
+		user_id=#userId#
+	</select>
+	<insert id="UserInfoIbatisDAO.insertUserRole" parameterClass="java.util.Map">
+		insert into tb_user_privilege(user_id,authority)
+		values(#userId#,#role#)
+	</insert>
+	<update id="UserInfoIbatisDAO.updateUserRole" parameterClass="java.util.Map">
+		update tb_user_privilege set authority=#role# where user_id=#userId#
+	</update>
+	<delete id="UserInfoIbatisDAO.deleteUserRole" parameterClass="java.util.Map">
+		delete from tb_user_privilege where user_id=#userId#
+	</delete>
+	<insert id="UserInfoIbatisDAO.insert" parameterClass="java.util.Map">
+		insert into
+		tb_user(gmt_create,gmt_modified,user_name,password
+		<dynamic>
+			<isNotNull property="is_employee" prepend=",">
+				is_employee
+			</isNotNull>
+			<isNotNull property="enable" prepend=",">
+				enable
+			</isNotNull>
+			<isNotNull property="hospitalId" prepend=",">
+				hospital_id
+			</isNotNull>
+		</dynamic>
+		)
+		values(
+		now(),now(),#userName#,#password#
+		<dynamic>
+			<isNotNull property="is_employee" prepend=",">
+				#is_employee#
+			</isNotNull>
+			<isNotNull property="enable" prepend=",">
+				#enable#
+			</isNotNull>
+			<isNotNull property="hospitalId" prepend=",">
+				#hospitalId#
+			</isNotNull>
+		</dynamic>
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<update id="UserInfoIbatisDAO.updateByUserId" parameterClass="java.util.Map">
+		update tb_user set gmt_modified=now()
+		<dynamic>
+			<isNotNull property="userName" prepend=",">
+				user_name=#userName#
+			</isNotNull>
+			<isNotNull property="password" prepend=",">
+				password=#password#
+			</isNotNull>
+			<isNotNull property="isEmployee" prepend=",">
+				is_employee=#isEmployee#
+			</isNotNull>
+			<isNotNull property="hospitalId" prepend=",">
+				hospital_id=#hospitalId#
+			</isNotNull>
+			<isNotNull property="enable" prepend=",">
+				enable=#enable#
+			</isNotNull>
+		</dynamic>
+		where user_id=#userId#
+	</update>
+	<select id="UserInfoIbatisDAO.queryForCheckingPassword"
+		parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		select user_id where
+		password=#password# and user_id=#userId#
+	</select>
+
+	<select id="UserInfoIbatisDAO.select" parameterClass="java.util.Map"
+		resultMap="userInfoDO">
+		<!-- select u.user_id,u.gmt_create,u.gmt_modified,u.user_name,u.is_employee,u.hospital_id,p.level 
+			from tb_user u,tb_user_privilege p <dynamic prepend="where"> u.user_id=p.user_id 
+			<isNotNull property="userId" prepend="and"> u.user_id=#userId# </isNotNull> 
+			<isNotNull property="userName" prepend="and"> u.user_name=#userName# </isNotNull> 
+			<isNotNull property="isEmployee" prepend="and"> u.is_employee=#isEmployee# 
+			</isNotNull> <isNotNull property="hospitalId" prepend="and"> u.hospital_id=#hospitalId# 
+			</isNotNull> <isNotNull property="level" prepend="and"> p.authority=#level# 
+			</isNotNull> </dynamic> -->
+		select
+		user_id,gmt_create,gmt_modified,user_name,is_employee,hospital_id
+		from
+		tb_user
+		<dynamic prepend="where">
+			<isNotNull property="userId" prepend="and">
+				user_id=#userId#
+			</isNotNull>
+			<isNotNull property="userName" prepend="and">
+				user_name=#userName#
+			</isNotNull>
+			<isNotNull property="isEmployee" prepend="and">
+				is_employee=#isEmployee#
+			</isNotNull>
+			<isNotNull property="hospitalId" prepend="and">
+				hospital_id=#hospitalId#
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="limit">
+			<isNotNull property="offset">
+				#offset#,
+			</isNotNull>
+			<isNotNull property="length">
+				#length#
+			</isNotNull>
+		</dynamic>
+	</select>
+</sqlMap>

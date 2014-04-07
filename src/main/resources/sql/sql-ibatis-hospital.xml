@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="hospital">
+	<resultMap id="hospitalInfoDO"
+		class="com.multiagent.hawklithm.hospital.DO.HospitalInfoDO">
+		<result property="hospitalId" column="hospital_id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="hospitalName" column="hospital_name" />
+		<result property="hospitalLevel" column="hospital_level" />
+		<result property="hospitalAddress" column="hospital_address" />
+		<result property="hospitalAgent" column="hospital_agent " />
+		<result property="agentPhone" column="agent_phone" />
+	</resultMap>
+	<insert id="IbatisHospitalInfoDAO.submit" parameterClass="java.util.Map">
+		insert
+		into
+		tb_hospital(hospital_name,hospital_level,hospital_address,hospital_agent,agent_phone)
+		values(#hospitalName#,#hospitalLevel#,#hospitalAddress#,#hospitalAgent#,#agentPhone#)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<select id="IbatisHospitalInfoDAO.query" parameterClass="java.util.Map"
+		resultMap="hospitalInfoDO">
+		select
+		hospital_id,gmt_create,gmt_modified,hospital_name,hospital_level,hospital_address,hospital_agent,agent_phone
+		from tb_hospital
+		<dynamic prepend="where">
+			1=1
+			<isNotNull property="hospitalId" prepend="and">
+				hospital_id=#hospitalId#
+			</isNotNull>
+			<isNotNull property="hospitalName" prepend="and">
+				hospital_name=#hospitalName#
+			</isNotNull>
+			<isNotNull property="hospitalLevel" prepend="and">
+				hospital_level=#hospitalLevel#
+			</isNotNull>
+			<isNotNull property="hospitalAddress" prepend="and">
+				hospital_address=#hospitalAddress#
+			</isNotNull>
+			<isNotNull property="hospitalAgent" prepend="and">
+				hospital_agent=#hospitalAgent#
+			</isNotNull>
+			<isNotNull property="agentPhone" prepend="and">
+				agent_phone=#agentPhone#
+			</isNotNull>
+		</dynamic>
+		limit #offset#,#length#
+	</select>
+	<update id="IbatisHospitalInfoDAO.modify" parameterClass="java.util.Map">
+		update tb_hospital set gmt_modified=now()
+		<dynamic>
+			<isNotNull property="hospitalName" prepend=",">
+				,hospital_name=#hospitalName#
+			</isNotNull>
+			<isNotNull property="hospitalLevel" prepend=",">
+				hospital_level=#hospitalLevel#
+			</isNotNull>
+			<isNotNull property="hospitalAddress" prepend=",">
+				hospital_address=#hospitalAddress#
+			</isNotNull>
+			<isNotNull property="hospitalAgent" prepend=",">
+				hospital_agent=#hospitalAgent#
+			</isNotNull>
+			<isNotNull property="agentPhone" prepend=",">
+				agent_phone=#agentPhone#
+			</isNotNull>
+		</dynamic>
+		where hospital_id=#hospitalId#
+	</update>
+	<delete id="IbatisHospitalInfoDAO.deleteById" parameterClass="java.util.Map">
+		delete from tb_hospital where hospital_id=#hospitalId#
+	</delete>
+</sqlMap>

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="history">
+	<!-- 	
+ * id						int	
+ * time					date				信息产生时间
+ * gmt_create			date				表项创建时间
+ * gmt_modified		date				表项修改时间
+ * rfid					int					读取到的RFID
+ * reader_id			int					读卡器id
+ * state					int					字段状态 
+  -->
+	<resultMap id="ReaderHistoryDO" class="com.multiagent.hawklithm.leon.DO.SqlReaderHistoryDO" >
+		<result property="id" column="id"/>
+		<result property="time" column="time" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="rfid" column="rfid" />
+		<result property="readerId" column="reader_id" />
+		<result property="state" column="state" />
+	</resultMap>
+	<resultMap id="EquipmentHistoryDO" class="com.multiagent.hawklithm.leon.DO.SqlReaderAtEquipmentDO">
+		<result property="id" column="id"/>
+		<result property="time" column="time"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="equipmentId" column="equipment_id"/>
+		<result property="packageId" column="package_id"/>
+		<result property="itemId" column="item_id"/>
+		<result property="readerId" column="reader_id"/>
+		<result property="cameraId" column="camera_id"/>
+		<result property="staffId" column="staff_id"/>
+	</resultMap>
+	<resultMap class="com.multiagent.hawklithm.history.dataobject.ItemHistoryDO" id="itemHistoryDO">
+		<result property="id" column="id"/>
+		<result property="time" column="time"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="itemId" column="item_id"/>
+		<result property="readerId" column="reader_id"/>
+		<result property="cameraId" column="camera_id"/>
+		<result property="itemStatus" column="item_status"/>
+		<result property="equipmentId" column="equipment_id"/>
+	</resultMap>
+	
+	<resultMap class="com.multiagent.hawklithm.history.dataobject.PackageHistoryDO" id="packageHistoryDO">
+		<result property="id" column="id"/>
+		<result property="time" column="time"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="packageId" column="package_id"/>
+		<result property="readerId" column="reader_id"/>
+		<result property="cameraId" column="camera_id"/>
+		<result property="packageStatus" column="package_status"/>
+		<result property="equipmentId" column="equipment_id"/>
+	</resultMap>
+<!-- 	private Integer id;
+	private Date time;
+	private Date gmtCreate;
+	private Date gmtModified;
+	private Integer equipmentId;
+	private Integer packageId;
+	private Integer itemId;
+	private Integer readerId;
+	private Integer cameraId;
+	private Integer staffId; -->
+	<select id="MachineFlowRecordDAO.selectHistoryInfo" parameterClass="java.util.Map" resultMap="EquipmentHistoryDO">
+		select id,time,gmt_create,gmt_modified,package_id,item_id,reader_id,camera_id,equipment_id,staff_id
+		from tb_equipment_history
+		<dynamic prepend="where">
+			<isNotNull property="id" prepend="and">
+				id=#id#
+			</isNotNull>
+			<isNotNull property="startTime" prepend="and">
+				<![CDATA[time>=#startTime# ]]>
+			</isNotNull>
+			<isNotNull property="endTime" prepend="and">
+				<![CDATA[time<=#endTime# ]]>
+			</isNotNull>
+			<isNotNull property="readerId" prepend="and">
+					reader_id=#readId#
+			</isNotNull>
+			<isNotNull property="itemId" prepend="and">
+				item_id=#itemId#
+			</isNotNull>
+			<isNotNull property="packageId" prepend="and">
+				package_id=#packageId#
+			</isNotNull>
+			<isNotNull property="equipmentId" prepend="and">
+				equipment_id=#equipmentId#
+			</isNotNull>
+			<isNotNull property="staffId" prepend="and">
+				staff_id=#staffId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<insert id="MachineFlowRecordDAO.insertObject" parameterClass="java.util.Map">
+	insert into tb_equipment_history(
+	time,
+	gmt_create,
+	gmt_modified,
+	<dynamic prepend=" ">
+		<isNotNull property="packageId">
+			package_id,
+		</isNotNull>
+		<isNotNull property="itemId">
+			item_id,
+		</isNotNull>
+	</dynamic>
+	reader_id,
+	camera_id,
+	equipment_id,
+	staff_id)
+	values (
+	#time#,
+	now(),
+	now(),
+	<dynamic prepend=" ">
+		<isNotNull property="packageId">
+			#packageId#,
+		</isNotNull>
+		<isNotNull property="itemId">
+			#itemId#,
+		</isNotNull>
+	</dynamic>
+	#readerId#,
+	#cameraId#,
+	#equipmentId#,
+	#staffId#
+	)
+	<selectKey resultClass="int" keyProperty="id">
+		SELECT
+		LAST_INSERT_ID() AS ID
+	</selectKey>
+</insert>
+	<!-- 	private Integer id;
+	private Date gmtCreate ;
+	private Date gmtModified;
+	private Integer readerId;
+	private Integer cameraId;
+	private Integer equipmentId; -->
+	<select id="MachineFlowRecordDAO.selectMapping" parameterClass="java.util.Map">
+		select
+		id,
+		reader_id,
+		camera_id,
+		equipment_id,
+		from
+		tb_equipment_history
+		<dynamic prepend="where">
+			1=1
+			<isNotNull property="readerId"  prepend="and">
+				reader_id=#readerId#
+			</isNotNull>
+			<isNotNull property="cameraId" prepend="and">
+				camera_id=#cameraId#
+			</isNotNull>
+			<isNotNull property="equipmentId" prepend="and">
+				equipment_id=#equipmentId#
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="limit">
+			<isNotNull property="offset">
+				#offset#,
+			</isNotNull>
+			<isNotNull property="length">
+				#length#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<insert id="MachineFlowRecordDAO.insertOriginalRFIDData" parameterClass="java.util.Map">
+		insert into tb_reader_history(
+		time,
+		gmt_create,
+		gmt_modified,
+		rfid,
+		reader_id,
+		state
+		)
+		values (
+		#time#,
+		now(),
+		now(),
+		#rfid#,
+		#readerId#,
+		0
+		)
+		<selectKey resultClass="int" keyProperty="id">  
+             SELECT LAST_INSERT_ID() AS ID  
+        </selectKey>
+	</insert>
+	<select id="ItemHistoryDAO.selectItemHistory" parameterClass="java.util.Map" resultMap="itemHistoryDO">
+		select
+		id,
+		time,
+		gmt_create,
+		gmt_modified,
+		item_id,
+		reader_id,
+		camera_id,
+		item_status,
+		equipment_id
+		from
+		tb_item_history
+		<dynamic prepend="where">
+			<isNotNull property="id" prepend="and">
+				id=#id#
+			</isNotNull>
+			<isNotNull property="itemId"  prepend="and">
+				item_id=#itemId#
+			</isNotNull>
+			<isNotNull property="readerId" prepend="and">
+				reader_id=#readerId#
+			</isNotNull>
+			<isNotNull property="equipmentId" prepend="and">
+				equipment_id=#equipmentId#
+			</isNotNull>
+			<isNotNull property="startTime" prepend="and">
+			<![CDATA[
+				#startTime#<=time  
+			]]>
+			</isNotNull>
+			<isNotNull property="endTime" prepend="and">
+			<![CDATA[
+				time<=#endTime#
+			]]>
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="limit">
+			<isNotNull property="offset">
+				#offset#,
+			</isNotNull>
+			<isNotNull property="length">
+				#length#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+
+	<select id="PackageHistoryDAO.selectPackageHistory" parameterClass="java.util.Map"
+		resultMap="packageHistoryDO">
+		select
+		id,
+		time,
+		gmt_create,
+		gmt_modified,
+		package_id,
+		reader_id,
+		camera_id,
+		equipment_id,
+		package_status
+		from
+		tb_package_history
+		<dynamic prepend="where">
+			<isNotNull property="id" prepend="and">
+				id=#id#
+			</isNotNull>
+			<isNotNull property="packageId" prepend="and">
+				package_id=#packageId#
+			</isNotNull>
+			<isNotNull property="readerId" prepend="and">
+				reader_id=#readerId#
+			</isNotNull>
+			<isNotNull property="equipmentId" prepend="and">
+				equipment_id=#equipmentId#
+			</isNotNull>
+			<isNotNull property="startTime" prepend="and">
+			<![CDATA[
+				#startTime#<=time  
+			]]>
+			</isNotNull>
+			<isNotNull property="endTime" prepend="and">
+			<![CDATA[
+				time<=#endTime#
+			]]>
+			</isNotNull>
+		</dynamic>
+		<dynamic prepend="limit">
+			<isNotNull property="offset">
+				#offset#,
+			</isNotNull>
+			<isNotNull property="length">
+				#length#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+	<insert id="ItemHistoryDAO.insertItemHisotry" parameterClass="java.util.Map">
+		insert into tb_item_history(
+		time,
+		gmt_create,
+		gmt_modified,
+		item_id,
+		reader_id
+		<isNotNull property="cameraId" prepend=",">
+			camera_id
+		</isNotNull>
+		,item_status
+		<isNotNull property="equipmentId" prepend=",">
+			equipment_id
+		</isNotNull>
+		)
+		values (
+		#time#,
+		now(),
+		now(),
+		#itemId#,
+		#readerId#
+		<isNotNull property="cameraId" prepend=",">
+			#cameraId#
+		</isNotNull>
+		,#itemStatus#
+		<isNotNull property="equipmentId" prepend=",">
+			#equipmentId#
+		</isNotNull>
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<insert id="PackageHistoryDAO.insertPackageHisotry" parameterClass="java.util.Map">
+		insert into tb_package_history(
+		time,
+		gmt_create,
+		gmt_modified,
+		package_id,
+		reader_id
+		<isNotNull property="cameraId" prepend=",">
+			camera_id
+		</isNotNull>
+		,package_status
+		<isNotNull property="equipmentId" prepend=",">
+			equipment_id
+		</isNotNull>
+		)
+		values (
+		#time#,
+		now(),
+		now(),
+		#packageId#,
+		#readerId#
+		<isNotNull property="cameraId" prepend=",">
+			#cameraId#
+		</isNotNull>
+		,#packageStatus#
+		<isNotNull property="equipmentId" prepend=",">
+			#equipmentId#
+		</isNotNull>
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<!--
+ * id						int	
+ * time					date				信息产生时间
+ * gmt_create			date				表项创建时间
+ * gmt_modified		date				表项修改时间
+ * rfid					int					读取到的RFID
+ * reader_id			int					读卡器id
+ * state					int					字段状态 
+	 -->
+	<update id="MachineFlowRecordDAO.updateUndealedOriginalRFIDData" parameterClass="java.util.Map">
+		update tb_reader_history 
+		set
+		 state=state+1
+		 where
+		 <![CDATA[
+			id<=#lastId#
+			]]>
+		 and state=0 and reader_id=#readerId# 
+	</update>
+	<!-- 	
+ * id						int	
+ * time					date				信息产生时间
+ * gmt_create			date				表项创建时间
+ * gmt_modified		date				表项修改时间
+ * rfid					int					读取到的RFID
+ * reader_id			int					读卡器id
+ * state					int					字段状态 
+  -->
+	<select id="MachineFlowRecordDAO.selectUndealedOriginalRFIDData" parameterClass="java.util.Map" resultMap="ReaderHistoryDO">
+		select 
+			rfid,reader_id
+		from 
+			tb_reader_history
+		where
+		<![CDATA[
+			id<=#lastId#
+			]]>
+			and state=0 and reader_id=#readerId#
+	</select>
+
+</sqlMap>

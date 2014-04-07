@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap
+PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="order">
+
+	<resultMap id="reflectOrderDO"
+		class="com.multiagent.hawklithm.sephiroth.DO.SqlReflectOrderDO">
+		<result property="reflectOrderId" column="reflet_order_id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="parentId" column="parent_id" />
+		<result property="itemType" column="item_type" />
+		<result property="itemAmount" column="item_amount" />
+	</resultMap>
+	<resultMap id="subOrderDO"
+		class="com.multiagent.hawklithm.sephiroth.DO.SqlSubPackageOrderDO">
+		<result property="subOrderId" column="sub_order_id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="parentId" column="parent_id" />
+		<result property="packageType" column="package_type" />
+		<result property="packageAmount" column="package_amount" />
+	</resultMap>
+	<resultMap id="mainOrderDO"
+		class="com.multiagent.hawklithm.sephiroth.DO.SqlMainPackageOrderDO">
+		<result property="orderId" column="order_id" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="userId" column="user_id" />
+		<result property="orderTime" column="order_time" />
+		<result property="orderStatus" column="order_status" />
+		<result property="expectReceiveTime" column="expect_receive_time" />
+		<result property="level" column="level" />
+		<result property="orderNote" column="order_note" />
+	</resultMap>
+	<delete id="IbatisOrderDataOperation.deleteMainOrderById"
+		parameterClass="java.util.Map">
+		delete from tb_order where order_id=#orderId#
+	</delete>
+	<!-- 子订单tb_sub_order -->
+	<delete id="IbatisOrderDataOperation.deleteSubOrderByParentId"
+		parameterClass="java.util.Map">
+		delete from tb_sub_order where parent_id=#parentId#
+	</delete>
+	<!-- 返件子订单 -->
+	<delete id="IbatisOrderDataOperation.deleteReflectOrderByParentId"
+		parameterClass="java.util.Map">
+		delete from tb_reflect_order where parent_id=#parentId#
+	</delete>
+	<!-- * 手术包主订单 tb_order order_id int gmt_create date 表项创建日期 gmt_modified 
+		date 表项修改日期 user_id int 下单用户ID order_time Date 下单时间 order_status varchar 
+		订单状态,对应配置文件中参数 expect_receive_time date 期望收货时间 level int 订单优先级 order_note 
+		varchar 备注 -->
+	<insert id="IbatisOrderDataOperation.insertMainOrder"
+		parameterClass="java.util.Map">
+		insert into
+		tb_order(gmt_create,gmt_modified,user_id,order_time,order_status,level
+		<dynamic prepend=" ">
+			<isNotNull property="expectReceiveTime" prepend=",">
+				expect_receive_time
+			</isNotNull>
+			<isNotNull property="orderNote" prepend=",">
+				order_note
+			</isNotNull>
+		</dynamic>
+		) values(
+		now(),
+		now(),
+		#userId#,
+		#orderTime#,
+		#orderStatus#,
+		#level#
+		<dynamic prepend=" ">
+			<isNotNull property="expectReceiveTime" prepend=",">
+				#expectReceiveTime#
+			</isNotNull>
+			<isNotNull property="orderNote" prepend=",">
+				#orderNote#
+			</isNotNull>
+		</dynamic>
+		)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+	</insert>
+	<select id="IbatisOrderDataOperation.selectMainOrder"
+		parameterClass="java.util.Map" resultMap="mainOrderDO">
+		select
+		order_id,gmt_create,gmt_modified,user_id,order_time,order_status,expect_receive_time,level,order_note
+		from tb_order
+		<dynamic prepend="where">
+			1=1
+			<isNotNull property="orderId" prepend="and">
+				order_id=#orderId#
+			</isNotNull>
+			<isNotNull property="userId" prepend="and">
+				user_id=#userId#
+			</isNotNull>
+			<isNotNull property="startTime" prepend="and">
+				<![CDATA[time>=#startTime#]]>
+			</isNotNull>
+			<isNotNull property="endTime" prepend="and">
+				<![CDATA[time<=#endTime#]]>
+			</isNotNull>
+			<isNotNull property="orderStatus" prepend="and">
+				order_status=#orderStatus#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<!-- 手术包子订单 tb_sub_order sub_order_id int gmt_create date 表项创建日期 gmt_modified 
+		date 表项修改日期 parent_id int 父订单ID package_type int 医疗包类型 package_amount int 
+		医疗包数量 -->
+	<insert id="IbatisOrderDataOperation.insertSubOrder"
+		parameterClass="java.util.Map">
+		insert into
+		tb_sub_order(gmt_create,gmt_modified,parent_id,package_type,package_amount)
+		values(
+		now(),
+		now(),
+		#parentId#,
+		#packageType#,
+		#packageAmount#
+		)
+	</insert>
+	<select id="IbatisOrderDataOperation.selectSubOrder"
+		parameterClass="java.util.Map" resultMap="subOrderDO">
+		select
+		sub_order_id,gmt_create,gmt_modified,parent_id,package_type,package_amount
+		from tb_sub_order
+		<dynamic prepend="where">
+			<isNotNull property="parentId">
+				parent_id=#parentId#
+			</isNotNull>
+		</dynamic>
+	</select>
+	<!-- 返件单 tb_reflect_order reflet_order_id int gmt_create date 表项创建日期 gmt_modified 
+		date 表项修改日期 Parent_id int 父订单ID item_type int 器械类型类型 item_amount int 器械数量 -->
+	<insert id="IbatisOrderDataOperation.insertReflectOrder"
+		parameterClass="java.util.Map">
+		insert into
+		tb_reflect_order(gmt_create,gmt_modified,parent_id,item_type,item_amount)
+		values(
+		now(),
+		now(),
+		#parentId#,
+		#itemType#,
+		#itemAmount#
+		)
+	</insert>
+	<select id="IbatisOrderDataOperation.selectReflectOrder"
+		parameterClass="java.util.Map" resultMap="reflectOrderDO">
+		select
+		reflect_order_id,gmt_create,gmt_modified,parent_id,item_type,item_amount
+		from tb_reflect_order
+		<dynamic prepend="where">
+			<isNotNull property="parentId">
+				parent_id=#parentId#
+			</isNotNull>
+		</dynamic>
+	</select>
+
+</sqlMap>
