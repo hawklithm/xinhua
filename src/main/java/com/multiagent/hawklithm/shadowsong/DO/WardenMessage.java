@@ -48,6 +48,11 @@ public class WardenMessage extends Message {
 	 */
 	public static String KIND_MACHINE_INFO_CHANGE="kind_machine_info_change";
 	
+	/**
+	 * 数据接收目标类型为入口 ，如某个工段的门
+	 */
+	public static String TARGET_TYPE_ENTRY="target_type_entry";
+	
 
 	// // RFID类型
 	// /**

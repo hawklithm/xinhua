@@ -10,6 +10,7 @@
 	<bean id="sorting_process_module" class="com.multiagent.hawklithm.leon.process.SortingProcess">
 		<property name="equipmentList">
 			<list>
+				<ref bean="sorting_gate" />
 				<ref bean="sorting_equipment1" />
 				<ref bean="sorting_equipment2" />
 			</list>
@@ -18,10 +19,25 @@
 			<list>
 				<ref bean="sorting_reader1" />
 				<ref bean="sorting_reader2" />
+				<ref bean="sorting_reader3" />
+				<ref bean="sorting_reader4" />
+				<ref bean="sorting_reader5" />
+				<ref bean="sorting_reader6" />
 				<ref bean="sorting_singleRead3" />
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="sorting_gate" class="com.multiagent.hawklithm.leon.module.Gate" init-method="initWarden">
+		<property name="moduleProperty">
+			<bean class="com.multiagent.hawklithm.leon.module.property.DO.GateProperty">
+				<property name="workspaceNameToUser" value="分拣工段"/>
+				<property name="workspaceName" value="sorting_process"/>
+				<property name="rfid" value="1023"/>
+			</bean>
+		</property>
+	</bean>
+	
 	<bean id="sorting_equipment1"
 		class="com.multiagent.hawklithm.leon.module.SortingEquipmentModule"
 		init-method="initWarden">
@@ -96,6 +112,33 @@
 				<property name="rfid" value="1127" />
 				<property name="targetRFID" value="1025" />
 				<property name="targetKind" value="target_type_machine" />
+				<property name="targetMessageKind" value="wm_rfidfromreader" />
+				<property name="targetMessageDir" value="wm_exit" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sorting_reader5" class="com.multiagent.hawklithm.leon.module.Reader"
+		init-method="initWarden">
+		<property name="moduleProperty">
+			<bean
+				class="com.multiagent.hawklithm.leon.module.property.DO.ReaderEquipmentProperty">
+				<property name="rfid" value="1226" />
+				<property name="targetRFID" value="1023" />
+				<property name="targetKind" value="sorting_processtarget_type_entry" />
+				<property name="targetMessageKind" value="wm_rfidfromreader" />
+				<property name="targetMessageDir" value="wm_enter" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="sorting_reader6" class="com.multiagent.hawklithm.leon.module.Reader"
+		init-method="initWarden">
+		<property name="moduleProperty">
+			<bean
+				class="com.multiagent.hawklithm.leon.module.property.DO.ReaderEquipmentProperty">
+				<property name="rfid" value="1227" />
+				<property name="targetRFID" value="1023" />
+				<property name="targetKind" value="sorting_processtarget_type_entry" />
 				<property name="targetMessageKind" value="wm_rfidfromreader" />
 				<property name="targetMessageDir" value="wm_exit" />
 			</bean>

@@ -11,6 +11,7 @@
 		class="com.multiagent.hawklithm.leon.process.SecondaryDisinfectProcess">
 		<property name="equipmentList">
 			<list>
+				<ref bean="secondary_disinfect_gate" />
 				<ref bean="secondary_disinfect_equipment1" />
 				<ref bean="secondary_disinfect_equipment2" />
 			</list>
@@ -19,10 +20,25 @@
 		<list>
 				<ref bean="secondary_disinfect_reader1" />
 				<ref bean="secondary_disinfect_reader2" />
+				<ref bean="secondary_disinfect_reader3" />
+				<ref bean="secondary_disinfect_reader4" />
+				<ref bean="secondary_disinfect_reader5" />
+				<ref bean="secondary_disinfect_reader6" />
 				<ref bean="secondary_disinfect_singleRead3" />
 		</list>
 		</property>
 	</bean>
+	
+	<bean id="secondary_disinfect_gate" class="com.multiagent.hawklithm.leon.module.Gate" init-method="initWarden">
+		<property name="moduleProperty">
+			<bean class="com.multiagent.hawklithm.leon.module.property.DO.GateProperty">
+				<property name="workspaceNameToUser" value="再次清洗工段"/>
+				<property name="workspaceName" value="secondary_disinfect_process"/>
+				<property name="rfid" value="4023"/>
+			</bean>
+		</property>
+	</bean>
+	
 	<bean id="secondary_disinfect_equipment1"
 		class="com.multiagent.hawklithm.leon.module.SecondaryDisinfectEquipmentModule"
 		init-method="initWarden">
@@ -95,6 +111,34 @@
 				<property name="rfid" value="4127" />
 				<property name="targetRFID" value="4025" />
 				<property name="targetKind" value="target_type_machine" />
+				<property name="targetMessageKind" value="wm_rfidfromreader" />
+				<property name="targetMessageDir" value="wm_exit" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="secondary_disinfect_reader5" class="com.multiagent.hawklithm.leon.module.Reader"
+		init-method="initWarden">
+		<property name="moduleProperty">
+			<bean
+				class="com.multiagent.hawklithm.leon.module.property.DO.ReaderEquipmentProperty">
+				<property name="rfid" value="4226" />
+				<property name="targetRFID" value="4023" />
+				<property name="targetKind" value="secondary_disinfect_processtarget_type_entry" />
+				<property name="targetMessageKind" value="wm_rfidfromreader" />
+				<property name="targetMessageDir" value="wm_enter" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="secondary_disinfect_reader6" class="com.multiagent.hawklithm.leon.module.Reader"
+		init-method="initWarden">
+		<property name="moduleProperty">
+			<bean
+				class="com.multiagent.hawklithm.leon.module.property.DO.ReaderEquipmentProperty">
+				<property name="rfid" value="4227" />
+				<property name="targetRFID" value="4023" />
+				<property name="targetKind" value="secondary_disinfect_processtarget_type_entry" />
 				<property name="targetMessageKind" value="wm_rfidfromreader" />
 				<property name="targetMessageDir" value="wm_exit" />
 			</bean>

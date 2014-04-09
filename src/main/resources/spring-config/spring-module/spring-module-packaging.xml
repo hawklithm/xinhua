@@ -10,6 +10,7 @@
 	<bean id="packaging_process_module" class="com.multiagent.hawklithm.leon.process.PackagingProcess">
 		<property name="equipmentList">
 			<list>
+				<ref bean="packaging_gate"/>
 				<ref bean="packaging_equipment1" />
 				<ref bean="packaging_equipment2" />
 			</list>
@@ -19,9 +20,24 @@
 				<ref bean="packaging_reader1" />
 				<ref bean="packaging_reader2" />
 				<ref bean="packaging_singleRead3" />
+				<ref bean="packaging_reader3" />
+				<ref bean="packaging_reader4" />
+				<ref bean="packaging_reader5" />
+				<ref bean="packaging_reader6" />
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="packaging_gate" class="com.multiagent.hawklithm.leon.module.Gate" init-method="initWarden">
+		<property name="moduleProperty">
+			<bean class="com.multiagent.hawklithm.leon.module.property.DO.GateProperty">
+				<property name="workspaceNameToUser" value="打包工段"/>
+				<property name="workspaceName" value="packaging_process"/>
+				<property name="rfid" value="3023"/>
+			</bean>
+		</property>
+	</bean>
+	
 	<bean id="packaging_equipment1"
 		class="com.multiagent.hawklithm.leon.module.PackagingEquipmentModule"
 		init-method="initWarden">
@@ -95,6 +111,34 @@
 				<property name="rfid" value="3127" />
 				<property name="targetRFID" value="3025" />
 				<property name="targetKind" value="target_type_machine" />
+				<property name="targetMessageKind" value="wm_rfidfromreader" />
+				<property name="targetMessageDir" value="wm_exit" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="packaging_reader5" class="com.multiagent.hawklithm.leon.module.Reader"
+		init-method="initWarden">
+		<property name="moduleProperty">
+			<bean
+				class="com.multiagent.hawklithm.leon.module.property.DO.ReaderEquipmentProperty">
+				<property name="rfid" value="3226" />
+				<property name="targetRFID" value="3023" />
+				<property name="targetKind" value="packaging_processtarget_type_entry" />
+				<property name="targetMessageKind" value="wm_rfidfromreader" />
+				<property name="targetMessageDir" value="wm_enter" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="packaging_reader6" class="com.multiagent.hawklithm.leon.module.Reader"
+		init-method="initWarden">
+		<property name="moduleProperty">
+			<bean
+				class="com.multiagent.hawklithm.leon.module.property.DO.ReaderEquipmentProperty">
+				<property name="rfid" value="3227" />
+				<property name="targetRFID" value="3023" />
+				<property name="targetKind" value="packaging_processtarget_type_entry" />
 				<property name="targetMessageKind" value="wm_rfidfromreader" />
 				<property name="targetMessageDir" value="wm_exit" />
 			</bean>
