@@ -12,7 +12,8 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<result property="staffPhoneNumber" column="staff_phone_number" />
 		<result property="staffGender" column="staff_gender" />
 		<result property="staffAge" column="staff_age" />
-		<result property="staffDepartmentId" column="staff_department_id" />
+		<result property="staffDepartmentName" column="staff_department_name" />
+		<result property="userIconPath" column="user_icon_path" />
 	</resultMap>
 	<delete id="IbatisStaffInfoDAO.deleteById" parameterClass="java.util.Map">
 		delete from tb_staff where staff_id=#staffId#
@@ -20,7 +21,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="IbatisStaffInfoDAO.query" parameterClass="java.util.Map"
 		resultMap="staffInfoDO">
 		select
-		staff_id,gmt_create,gmt_modified,staff_name,staff_phone_number,staff_gender,staff_age,staff_department_id
+		staff_id,gmt_create,gmt_modified,staff_name,staff_phone_number,staff_gender,staff_age,staff_department_name
 		from tb_staff
 		<dynamic prepend="where">
 			1=1
@@ -42,8 +43,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			<isNotNull property="staffAgeEnd" prepend="and">
 				<![CDATA[staff_age<=#staffAgeEnd#]]>
 			</isNotNull>
-			<isNotNull property="staffDepartmentId" prepend="and">
-				staff_department_id=#staffDepartmentId#
+			<isNotNull property="staffDepartmentName" prepend="and">
+				staff_department_name=#staffDepartmentName#
+			</isNotNull>
+			<isNotNull property="userIconPath" prepend="and">
+				user_icon_path=#userIconPath#
 			</isNotNull>
 		</dynamic>
 		<dynamic prepend="limit">
@@ -64,7 +68,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				staffPhoneNumber
 			</isNotNull>
 		</dynamic>
-		,staff_gender,staff_age,staff_department_id
+		,staff_gender,staff_age,staff_department_id,user_icon_path
 		)
 		values(
 		now(),now(),#staffName#
@@ -73,7 +77,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 				#staffPhoneNumber#
 			</isNotNull>
 		</dynamic>
-		,#staffGender#,#staffAge#,#staffDepartmentId#
+		,#staffGender#,#staffAge#,#staffDepartmentId#,#userIconPath#
 		)
 		<selectKey resultClass="int" keyProperty="id">
 			SELECT
@@ -97,6 +101,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			</isNotNull>
 			<isNotNull property="staffDepartmentId" prepend=",">
 				staff_department_id=#staffDepartmentId#
+			</isNotNull>
+			<isNotNull property="userIconPath" prepend=",">
+				user_icon_path=#userIconPath#
 			</isNotNull>
 		</dynamic>
 		where staff_id=#staffId#

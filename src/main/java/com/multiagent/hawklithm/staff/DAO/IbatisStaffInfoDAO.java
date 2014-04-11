@@ -48,7 +48,7 @@ public class IbatisStaffInfoDAO {
 
 	public List<StaffInfoDO> query(Integer staffId, String staffName, String staffPhoneNumber,
 			String staffGender, Integer staffAgeStart, Integer staffAgeEnd,
-			String staffDepartmentId, Integer offset, Integer length) throws DataAccessException {
+			String staffDepartmentName, Integer offset, Integer length) throws DataAccessException {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("staffId", staffId);
 		paramMap.put("staffName", staffName);
@@ -56,7 +56,7 @@ public class IbatisStaffInfoDAO {
 		paramMap.put("staffGender", staffGender);
 		paramMap.put("staffAgeStart", staffAgeStart);
 		paramMap.put("staffAgeEnd", staffAgeEnd);
-		paramMap.put("staffDepartmentId", staffDepartmentId);
+		paramMap.put("staffDepartmentName", staffDepartmentName);
 		paramMap.put("offset", offset);
 		paramMap.put("length", length);
 		return (List<StaffInfoDO>) ibatisManager.select("IbatisStaffInfoDAO.query", paramMap);

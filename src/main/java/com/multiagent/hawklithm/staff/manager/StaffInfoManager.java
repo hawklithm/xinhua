@@ -1,9 +1,12 @@
 package com.multiagent.hawklithm.staff.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
+import com.multiagent.hawklithm.machineInfo.DAO.IbatisEquipmentStaffMappingDAO;
+import com.multiagent.hawklithm.machineInfo.DO.EquipmentStaffMappingDO;
 import com.multiagent.hawklithm.staff.DAO.IbatisStaffInfoDAO;
 import com.multiagent.hawklithm.staff.DO.StaffInfoDO;
 import com.multiagent.hawklithm.staff.interface4rpc.RPCStaffInfoManagerInterface;
@@ -14,6 +17,7 @@ import com.multiagent.hawklithm.staff.interface4rpc.RPCStaffInfoManagerInterface
  */
 public class StaffInfoManager implements RPCStaffInfoManagerInterface {
 	private IbatisStaffInfoDAO ibatisStaffInfoDao;
+	private IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO;
 
 	@Override
 	public boolean delete(int staffId) throws DataAccessException {
@@ -62,9 +66,9 @@ public class StaffInfoManager implements RPCStaffInfoManagerInterface {
 	@Override
 	public StaffInfoDO[] queryByAllInfo(Integer staffId, String staffName, String staffPhoneNumber,
 			String staffGender, Integer staffAgeStart, Integer staffAgeEnd,
-			String staffDepartmentId, Integer offset, Integer length) throws DataAccessException {
+			String staffDepartmentName, Integer offset, Integer length) throws DataAccessException {
 		List<StaffInfoDO> ret = ibatisStaffInfoDao.query(staffId, staffName, staffPhoneNumber,
-				staffGender, staffAgeStart, staffAgeEnd, staffDepartmentId, offset, length);
+				staffGender, staffAgeStart, staffAgeEnd, staffDepartmentName, offset, length);
 		return ret.toArray(new StaffInfoDO[ret.size()]);
 	}
 
@@ -81,6 +85,25 @@ public class StaffInfoManager implements RPCStaffInfoManagerInterface {
 			Integer staffAge, String staffDepartmentId) throws DataAccessException {
 		return ibatisStaffInfoDao.submit(staffName, staffPhoneNumber, staffGender, staffAge,
 				staffDepartmentId);
+	}
+
+	@Override
+	public StaffInfoDO[] queryByEquipmentId(Integer equipmentId) {
+		List<EquipmentStaffMappingDO>mappings=ibatisEquipmentStaffMappingDAO.queryMapping(equipmentId, null, 0, 15);
+		List<StaffInfoDO> staffInfos=new ArrayList<StaffInfoDO>(mappings.size());
+		for (EquipmentStaffMappingDO mapping:mappings){
+			staffInfos.add(ibatisStaffInfoDao.query(mapping.getStaffId(), null, null, null, null, null, null, 0, 1).get(0));
+		}
+		return staffInfos.toArray(new StaffInfoDO[staffInfos.size()]);
+	}
+
+	public IbatisEquipmentStaffMappingDAO getIbatisEquipmentStaffMappingDAO() {
+		return ibatisEquipmentStaffMappingDAO;
+	}
+
+	public void setIbatisEquipmentStaffMappingDAO(
+			IbatisEquipmentStaffMappingDAO ibatisEquipmentStaffMappingDAO) {
+		this.ibatisEquipmentStaffMappingDAO = ibatisEquipmentStaffMappingDAO;
 	}
 
 }
