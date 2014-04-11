@@ -170,7 +170,7 @@ FrontEndingRequestTransport
 		"staffPhoneNumber"：员工电话,String,
 		"staffGender":员工性别,String,
 		"staffAge":员工年龄,Integer,
-		"staffDepartmentId":员工所属部门编号,String,
+		"staffDepartmentName":员工所属部门编号,String,
 		"staffAgeStart":查询时使用，员工年龄开始,Integer,
 		"staffAgeEnd":查询时使用，员工年龄结束,Integer
 	}
