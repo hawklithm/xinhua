@@ -21,10 +21,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 	<select id="IbatisStaffInfoDAO.query" parameterClass="java.util.Map"
 		resultMap="staffInfoDO">
 		select
-		staff_id,gmt_create,gmt_modified,staff_name,staff_phone_number,staff_gender,staff_age,staff_department_name
+		staff_id,gmt_create,gmt_modified,staff_name,staff_phone_number,staff_gender,staff_age,staff_department_name,user_icon_path
 		from tb_staff
 		<dynamic prepend="where">
-			1=1
 			<isNotNull property="staffId" prepend="and">
 				staff_id=#staffId#
 			</isNotNull>
