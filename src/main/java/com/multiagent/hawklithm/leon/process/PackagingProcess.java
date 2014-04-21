@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.multiagent.hawklithm.davinci.exceptioin.EquipmentNotFoundException;
 import com.multiagent.hawklithm.leon.module.EquipmentObject;
+import com.multiagent.hawklithm.leon.module.Gate;
 import com.multiagent.hawklithm.leon.module.PackagingEquipmentModule;
 import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty;
 import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
@@ -114,7 +115,11 @@ public class PackagingProcess implements IProcessModule {
 	public List<ChangerAnnouncerProperty> getBufferedPropertyList() {
 		List<ChangerAnnouncerProperty> ret = new ArrayList<ChangerAnnouncerProperty>();
 		for (EquipmentObject<? extends ModuleProperty> object : equipmentList) {
-			ret.add(object.getBufferedProperty());
+			ChangerAnnouncerProperty property=object.getBufferedProperty();
+			if(object instanceof Gate){
+				property.setSourceType(Gate.GATE_TAG);
+			}
+			ret.add(property);
 		}
 		return ret;
 	}

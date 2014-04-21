@@ -18,6 +18,7 @@ public class Gate extends EquipmentObject<GateProperty>{
 	private Gson gson = new Gson();
 	private OriginalRFIDDataClassifier rfidClassifier;
 	private RFIDMachineFlowRecordManager rfidManager;
+	public static String GATE_TAG="gate_tag";
 	/**
 	 * ½øÈë×´Ì¬
 	 */
