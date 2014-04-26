@@ -14,6 +14,14 @@ import com.multiagent.hawklithm.ibatis.IbatisManagerModule;
 import com.multiagent.hawklithm.leon.DO.SqlEquipCamReaderMappingDO;
 import com.multiagent.hawklithm.leon.DO.SqlReaderAtEquipmentDO;
 
+/*
+ * 流水线上仪器记录
+ * RFID数据的插入数据库
+ * 查询历史记录
+ * 插入历史记录
+ * 
+ */
+
 public class MachineFlowRecordDAO {
 	private IbatisManagerModule ibatisManager;
 	private TransactionTemplate transactionTemplate;

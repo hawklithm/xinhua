@@ -3,6 +3,7 @@ package com.multiagent.hawklithm.davinci.rpc.DO;
 import org.jboss.netty.channel.Channel;
 
 public class RPCConnectInfo {
+	//RPC连接信息包含信息、管道
 	private String msg;
 	private Channel channel;
 

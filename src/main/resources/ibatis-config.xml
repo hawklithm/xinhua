@@ -4,12 +4,12 @@
 <sqlMapConfig>
 	<sqlMap resource="sql/sql-ibatis-history.xml" />
 	<sqlMap resource="sql/sql-ibatis-order.xml" />
-	<sqlMap resource="sql/sql-ibatis-transport.xml"/>
-	<sqlMap resource="sql/sql-ibatis-user.xml"/>
-	<sqlMap resource="sql/sql-ibatis-vehicle.xml"/>
-	<sqlMap resource="sql/sql-ibatis-machinemanagement.xml"/>
-	<sqlMap resource="sql/sql-ibatis-hospital.xml"/>
-	<sqlMap resource="sql/sql-ibatis-staff.xml"/>
-	<sqlMap resource="sql/sql-ibatis-gps.xml"/>
-	<sqlMap resource="sql/sql-ibatis-item.xml"/>
+	<sqlMap resource="sql/sql-ibatis-transport.xml" />
+	<sqlMap resource="sql/sql-ibatis-user.xml" />
+	<sqlMap resource="sql/sql-ibatis-vehicle.xml" />
+	<sqlMap resource="sql/sql-ibatis-machinemanagement.xml" />
+	<sqlMap resource="sql/sql-ibatis-hospital.xml" />
+	<sqlMap resource="sql/sql-ibatis-staff.xml" />
+	<sqlMap resource="sql/sql-ibatis-gps.xml" />
+	<sqlMap resource="sql/sql-ibatis-item.xml" />
 </sqlMapConfig>

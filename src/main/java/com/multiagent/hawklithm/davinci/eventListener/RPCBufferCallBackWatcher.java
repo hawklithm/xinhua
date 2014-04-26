@@ -5,7 +5,10 @@ import com.multiagent.hawklithm.davinci.exceptioin.BufferOverflowException;
 import com.multiagent.hawklithm.davinci.exceptioin.MessageTransportException;
 import com.multiagent.hawklithm.davinci.net.NettyHandler;
 import com.multiagent.hawklithm.davinci.rpc.DO.RPCConnectInfo;
-
+/*
+ * 
+ * RPC时间构成了一个队列
+ */
 public class RPCBufferCallBackWatcher  {
 
 	private class LoopQueue {
@@ -51,12 +54,12 @@ public class RPCBufferCallBackWatcher  {
 	
 	public boolean insert(RPCConnectInfo msg) {
 		try {
-			sendBuffer.insert(msg);
+//			sendBuffer.insert(msg);
 			sendOut(msg);
-		} catch (BufferOverflowException e) {
-			// TODO 打印日志
-			e.printStackTrace();
-			return false;
+//		} catch (BufferOverflowException e) {
+//			// TODO 打印日志
+//			e.printStackTrace();
+//			return false;
 		} catch (MessageTransportException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

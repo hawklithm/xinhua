@@ -5,6 +5,7 @@ import java.util.UUID;
 /**
  * 
  * @author hawklithm
+ * RPC系统交互协议
  * 
  */
 public class RPCSystemProtocol {

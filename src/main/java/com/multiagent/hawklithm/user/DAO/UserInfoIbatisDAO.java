@@ -40,7 +40,7 @@ public class UserInfoIbatisDAO {
 	 * @throws DataAccessException
 	 */
 	public int submit(final String userName, final String password, final String level,
-			final Boolean isEmployee, final Integer hospitalId, final Boolean enable)
+			final Boolean isEmployee, final Integer hospitalId, final Boolean enable,final int staffId)
 			throws DataAccessException {
 		return transactionTemplate.execute(new TransactionCallback<Integer>() {
 
@@ -64,7 +64,7 @@ public class UserInfoIbatisDAO {
 
 	public int modify(final int userId, final String userName, final String password,
 			final String level, final Boolean isEmployee, final Integer hospitalId,
-			final Boolean enable) throws DataAccessException {
+			final Boolean enable,final int staffId) throws DataAccessException {
 		return transactionTemplate.execute(new TransactionCallback<Integer>() {
 
 			@Override
@@ -107,13 +107,13 @@ public class UserInfoIbatisDAO {
 	}
 
 	public List<SqlUserInfoDO> query(Integer userId, String userName, String level,
-			Boolean isEmployee, Integer hospitalId) {
-		return query(userId, userName, level, isEmployee, hospitalId, null, null);
+			Boolean isEmployee, Integer hospitalId,Integer staffId) {
+		return query(userId, userName, level, isEmployee, hospitalId, null, null,staffId);
 	}
 
 	public List<SqlUserInfoDO> query(Integer userId, String userName, String level,
-			Boolean isEmployee, Integer hospitalId, Integer offset, Integer length) {
-		List<SqlUserInfoDO> infos = select(userId, userName, level, isEmployee, hospitalId, offset,
+			Boolean isEmployee, Integer hospitalId,Integer staffId, Integer offset, Integer length) {
+		List<SqlUserInfoDO> infos = select(userId, userName, level, isEmployee, hospitalId,staffId,offset,
 				length);
 		for (SqlUserInfoDO info : infos) {
 			List<String> roles = selectUserRole(info.getUserId());
@@ -165,13 +165,14 @@ public class UserInfoIbatisDAO {
 	}
 
 	private List<SqlUserInfoDO> select(Integer userId, String userName, String level,
-			Boolean isEmployee, Integer hospitalId, Integer offset, Integer length)
+			Boolean isEmployee, Integer hospitalId,Integer staffId, Integer offset, Integer length)
 			throws DataAccessException {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("userId", userId);
 		paramMap.put("userName", userName);
 		paramMap.put("isEmployee", isEmployee);
 		paramMap.put("hospitalId", hospitalId);
+		paramMap.put("staffId",staffId);
 		paramMap.put("offset", offset);
 		paramMap.put("length", length);
 		// paramMap.put("level", level);

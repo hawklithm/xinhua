@@ -16,6 +16,7 @@ public class SqlUserInfoDO {
 	private Boolean isEmployee;
 	private Integer hospitalId;
 	private Boolean enable;
+	private Integer staffId;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -70,4 +71,11 @@ public class SqlUserInfoDO {
 	public void setLevel(String level) {
 		this.level = level;
 	}
+	public Integer getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(Integer staffId) {
+		this.staffId = staffId;
+	}
+	
 }

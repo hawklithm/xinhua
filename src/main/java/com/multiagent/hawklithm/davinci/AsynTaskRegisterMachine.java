@@ -10,6 +10,7 @@ import com.multiagent.hawklithm.global.register.IRegisterManager;
 /**
  * 
  * @author hawklithm
+ * Òì²½×¢²áÆ÷
  *
  */
 public class AsynTaskRegisterMachine implements IRegisterManager{

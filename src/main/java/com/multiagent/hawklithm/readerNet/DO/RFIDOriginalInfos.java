@@ -4,6 +4,8 @@ package com.multiagent.hawklithm.readerNet.DO;
  * 读卡器原始数据封装
  * @author hawklithm
  *
+ *SqlRFIDOriginalObject表示RFID消息的bean
+ *
  */
 public class RFIDOriginalInfos {
 	private SqlRFIDOriginalObject infos[];

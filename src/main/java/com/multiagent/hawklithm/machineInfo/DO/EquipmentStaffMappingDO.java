@@ -3,6 +3,7 @@ package com.multiagent.hawklithm.machineInfo.DO;
 import java.util.Date;
 
 public class EquipmentStaffMappingDO {
+	//因为每一个员工对应一个仪器
 	private Integer id;
 	private Date gmtCreate;
 	private Date gmtModified;

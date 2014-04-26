@@ -12,6 +12,7 @@ import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
 
 /**
  * 分拣过程模块
+ * 清洗消毒模块
  * 
  * @author hawklithm 2013-12-26下午4:12:11
  */
@@ -19,6 +20,7 @@ public class CleanAndDisinfectProcess implements IProcessModule {
 
 	private static String DefaultName = "Clean&DisinfectProcess";
 	private String name = DefaultName;
+	//通过注入设置机器和读卡器的列表
 	private List<EquipmentObject<? extends ModuleProperty>> equipmentList = new ArrayList<EquipmentObject<? extends ModuleProperty>>();
 	private List<EquipmentObject<? extends ModuleProperty>> readerList = new ArrayList<EquipmentObject<? extends ModuleProperty>>();
 

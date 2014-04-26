@@ -8,8 +8,8 @@ import com.hawklithm.utils.Jsoner;
  * 2013-12-28下午5:35:52
  */
 public class CleanAndDisinfectEquipmentProperty extends ModuleProperty {
-	private String disinfectantName;
-	private String concentration;
+	private String disinfectantName;       //消毒名
+	private String concentration;        //清洗消毒专注点
 	public String getDisinfectantName() {
 		return disinfectantName;
 	}

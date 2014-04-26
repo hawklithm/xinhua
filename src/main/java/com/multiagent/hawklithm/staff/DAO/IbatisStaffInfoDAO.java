@@ -21,13 +21,13 @@ public class IbatisStaffInfoDAO {
 	private IbatisManagerModule ibatisManager;
 
 	public int submit(String staffName, String staffPhoneNumber, String staffGender,
-			Integer staffAge, String staffDepartmentId) throws DataAccessException {
+			Integer staffAge, String staffDepartmentname) throws DataAccessException {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("staffName", staffName);
 		paramMap.put("staffPhoneNumber", staffPhoneNumber);
 		paramMap.put("staffGender", staffGender);
 		paramMap.put("staffAge", staffAge);
-		paramMap.put("staffDepartmentId", staffDepartmentId);
+		paramMap.put("staffDepartmentId", staffDepartmentname);
 		return (int) ibatisManager.insert("IbatisStaffInfoDAO.submit", paramMap);
 
 	}
@@ -61,7 +61,6 @@ public class IbatisStaffInfoDAO {
 		paramMap.put("length", length);
 		return (List<StaffInfoDO>) ibatisManager.select("IbatisStaffInfoDAO.query", paramMap);
 	}
-
 	public int deleteById(Integer staffId) throws DataAccessException {
 		Assert.notNull(staffId);
 		Map<String, Object> paramMap = new HashMap<String, Object>();

@@ -10,6 +10,8 @@ import com.multiagent.hawklithm.davinci.rpc.acl.RPCACLManager;
 /**
  * 
  * @author hawklithm
+ * RPC接口服务管理器
+ * List里面包含很多的提供服务的接口的具体信息及对应的具体类名
  *
  */
 public class RPCRegManager {

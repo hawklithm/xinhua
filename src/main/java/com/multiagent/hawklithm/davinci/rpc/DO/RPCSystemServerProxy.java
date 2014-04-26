@@ -2,6 +2,15 @@ package com.multiagent.hawklithm.davinci.rpc.DO;
 /**
  * 
  * @author hawklithm
+ * 
+ * 
+ * RPC系统服务代理
+ *接口名
+ *版本
+ *类名
+ *target代表实际的对象
+ *是否可见
+ *
  *
  */
 public class RPCSystemServerProxy {

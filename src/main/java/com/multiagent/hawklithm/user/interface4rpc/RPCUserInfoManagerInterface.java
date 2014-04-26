@@ -16,7 +16,7 @@ public interface RPCUserInfoManagerInterface {
 	 * @return
 	 */
 	public boolean addUser(String userName, String password, String level, boolean isEmployee,
-			int hospitalId);
+			int hospitalId,int staffId);
 
 	/**
 	 * 删除用户
@@ -53,7 +53,7 @@ public interface RPCUserInfoManagerInterface {
 	 * @return
 	 */
 	public SqlUserInfoDO[] selectUser(Integer userId, String userName, String level,
-			Boolean isEmployee, Integer hospitalId, Integer offset, Integer length);
+			Boolean isEmployee, Integer hospitalId,int staffId,Integer offset, Integer length);
 
 	/**
 	 * 修改用户密码
@@ -76,6 +76,6 @@ public interface RPCUserInfoManagerInterface {
 	 * @return
 	 */
 	boolean modifyUserInfo(int userId, String userName, String level, boolean isEmployee,
-			int hospitalId, boolean enable);
+			int hospitalId, boolean enable,int staffId);
 
 }

@@ -14,6 +14,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<result property="isEmployee" column="is_employee" />
 		<result property="hospitalId" column="hospital_id " />
 		<result property="enable" column="enable" />
+		<result property="staffId" column="staff_id" />
 	</resultMap>
 	<delete id="UserInfoIbatisDAO.deleteById" parameterClass="java.util.Map">
 		delete
@@ -62,6 +63,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			<isNotNull property="hospitalId" prepend=",">
 				#hospitalId#
 			</isNotNull>
+			<isNotNull property="staffId" prepend=",">
+				#staffId#
+			</isNotNull>
 		</dynamic>
 		)
 		<selectKey resultClass="int" keyProperty="id">
@@ -87,6 +91,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			<isNotNull property="enable" prepend=",">
 				enable=#enable#
 			</isNotNull>
+			<isNotNull property="staffId" prepend=",">
+				staff_id=#staffId#
+			</isNotNull>
 		</dynamic>
 		where user_id=#userId#
 	</update>
@@ -107,7 +114,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			</isNotNull> <isNotNull property="level" prepend="and"> p.authority=#level# 
 			</isNotNull> </dynamic> -->
 		select
-		user_id,gmt_create,gmt_modified,user_name,is_employee,hospital_id
+		user_id,gmt_create,gmt_modified,user_name,is_employee,hospital_id,staff_Id
 		from
 		tb_user
 		<dynamic prepend="where">
@@ -122,6 +129,9 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			</isNotNull>
 			<isNotNull property="hospitalId" prepend="and">
 				hospital_id=#hospitalId#
+			</isNotNull>
+			<isNotNull property="staffId" prepend="and">
+				staff_id=#staffId#
 			</isNotNull>
 		</dynamic>
 		<dynamic prepend="limit">

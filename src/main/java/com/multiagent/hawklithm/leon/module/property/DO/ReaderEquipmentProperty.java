@@ -10,8 +10,11 @@ import com.hawklithm.utils.Jsoner;
 public class ReaderEquipmentProperty extends ModuleProperty{
 	
 	private int targetRFID = 0;
+	//目标信息的类型
 	private String targetMessageKind = "";
+	//目标的类型
 	private String targetKind = "";
+	//目标信息的目录
 	private String targetMessageDir = "";
 	@Override
 	public String getProperty() {

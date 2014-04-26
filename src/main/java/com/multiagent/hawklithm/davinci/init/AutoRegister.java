@@ -11,6 +11,7 @@ import com.multiagent.hawklithm.leon.process.IProcessModule;
 /**
  * 
  * @author hawklithm
+ * AutoRegister主要是执行代理
  * 
  */
 public class AutoRegister implements BeanPostProcessor {
@@ -23,7 +24,10 @@ public class AutoRegister implements BeanPostProcessor {
 				+ bean.getClass().getName() + "初始化开始");
 		return bean;
 	}
-
+/*
+ * 在初始化后进行处理，如果注册的是AsynTaskRegister则加入到asynTaskRegManager,否则ProcessModuleRegisterManager进行注册(non-Javadoc)
+ * @see org.springframework.beans.factory.config.BeanPostProcessor#postProcessAfterInitialization(java.lang.Object, java.lang.String)
+ */
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 			throws BeansException {
 		if (bean instanceof AsynTaskRegister) {

@@ -6,13 +6,18 @@ import java.util.Set;
 import com.google.gson.Gson;
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 
+
+
+//属性模块,包括RFID,器械Rfid,包裹的RFID
 public abstract class ModuleProperty implements PropertyCollector {
 	protected int rfid = (int) (Math.random() * 100000);
 	protected Set<ItemInfoDO> itemRFIDs=new HashSet<ItemInfoDO>();
 	protected Set<Integer> packageRFIDs=new HashSet<Integer>();
 	protected int staffRFID;
 //	protected int cubage;
+	//具体信息
 	protected String detail;
+	//生产厂家
 	protected String manufacture;
 	protected Gson gson = new Gson();
 

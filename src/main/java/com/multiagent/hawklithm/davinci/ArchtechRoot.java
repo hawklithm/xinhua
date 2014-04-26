@@ -14,6 +14,7 @@ import com.multiagent.hawklithm.davinci.rpc.Server.RPCServer;
 /**
  * 
  * @author hawklithm
+ * 初始化，加载mysql数据库驱动程序
  * 
  */
 public class ArchtechRoot implements Callable<Boolean> {
@@ -33,6 +34,9 @@ public class ArchtechRoot implements Callable<Boolean> {
 	public Boolean call() throws Exception {
 		try {
 			System.out.println("初始化bean");
+			/*
+			 * 加载springContext-*文件
+			 */
 			ApplicationContext context = new ClassPathXmlApplicationContext("springContext-*.xml");
 			SystemInitDO initDO = (SystemInitDO) context.getBean("root");
 			RPCServer rpcRoot = (RPCServer) context.getBean("rpcRoot");
@@ -46,6 +50,9 @@ public class ArchtechRoot implements Callable<Boolean> {
 			} catch (NoSuchBeanDefinitionException e) {
 				// TODO 日志打印警告，在该xml中无RegisterMachine定义，该警告可忽略
 			}
+			/*
+			 * 将所有的bean均由RPCSystemServerProxy来实现
+			 */
 			for (RPCSystemServerProxy object : rpcRoot.getRPCregManager().getRegList()) {
 				if (StringUtils.hasLength(object.getBeanId())) {
 					try {
@@ -62,6 +69,7 @@ public class ArchtechRoot implements Callable<Boolean> {
 			// }
 			/**
 			 * 对于配置文件中没有的项则不进行关联，而直接根据class生成实例
+			 * RPCSystemServerProxy包括类名，接口名，方法名版本等信息，还有响应的类的实体
 			 */
 			for (RPCSystemServerProxy object : rpcRoot.getRPCregManager().getRegList()) {
 				if (!object.isLinked()) {

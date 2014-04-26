@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.multiagent.hawklithm.davinci.rpc.DO.RPCInterfaceInfoDO;
 import com.multiagent.hawklithm.ibatis.IbatisManagerModule;
-
+/*
+ * RPC接口信息管理，
+ * 包括信息的插入
+ */
 public class RPCInterfaceInfoDAO {
 	private IbatisManagerModule ibatisManager;
 	public void submitData(String interfaceName,String version,String className,String beanId,String comment,boolean visible){

@@ -6,7 +6,10 @@ import com.google.gson.Gson;
 import com.multiagent.hawklithm.davinci.exceptioin.MessageTransportException;
 import com.multiagent.hawklithm.readerNet.DO.RFIDOriginalInfos;
 import com.multiagent.hawklithm.readerNet.manager.ReaderDataManager;
-
+/*
+ * 读卡器通道RFID特定消息
+ * 而消息包含message、channel
+ */
 public class ReaderNettyHandler extends NettyHandler {
 
 	private Gson gson = new Gson();

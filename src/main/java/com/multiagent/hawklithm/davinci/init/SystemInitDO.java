@@ -4,7 +4,7 @@ import java.util.List;
 /**
  * 
  * @author hawklithm
- *
+ *获得所有配置文件.xml
  */
 public class SystemInitDO {
 	private List<String> configFileList;

@@ -5,6 +5,9 @@ import java.util.Date;
  *读卡器原始数据 
  * @author hawklithm
  *
+ *RFID ID
+ *读卡器 ID
+ *时间
  */
 public class SqlRFIDOriginalObject {
 	private int rfid;

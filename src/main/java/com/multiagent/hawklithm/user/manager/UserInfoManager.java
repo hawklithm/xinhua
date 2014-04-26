@@ -14,9 +14,9 @@ public class UserInfoManager implements RPCUserInfoManagerInterface {
 
 	@Override
 	public boolean addUser(String userName, String password, String level, boolean isEmployee,
-			int hospitalId) {
+			int hospitalId,int staffId) {
 		try {
-			userInfoDao.submit(userName, password, level, isEmployee, hospitalId, true);
+			userInfoDao.submit(userName, password, level, isEmployee, hospitalId, true,staffId);
 		} catch (DataAccessException e) {
 			return false;
 		}
@@ -34,10 +34,10 @@ public class UserInfoManager implements RPCUserInfoManagerInterface {
 
 	@Override
 	public boolean modifyUserInfo(int userId, String userName, String level, boolean isEmployee,
-			int hospitalId, boolean enable) {
+			int hospitalId, boolean enable,int staffId) {
 		try {
 			return userInfoDao
-					.modify(userId, userName, null, level, isEmployee, hospitalId, enable) != 0;
+					.modify(userId, userName, null, level, isEmployee, hospitalId, enable,staffId) != 0;
 		} catch (DataAccessException e) {
 			return false;
 		}
@@ -46,7 +46,7 @@ public class UserInfoManager implements RPCUserInfoManagerInterface {
 	@Override
 	public boolean modifyPassword(int userId, String oldPassword, String newPassword) {
 		if (userInfoDao.queryForCheckingPassword(userId, oldPassword)) {
-			userInfoDao.modify(userId, null, newPassword, null, null, null, null);
+			userInfoDao.modify(userId, null, newPassword, null, null, null, null,(Integer) null);
 			return true;
 		}
 		return false;
@@ -54,7 +54,7 @@ public class UserInfoManager implements RPCUserInfoManagerInterface {
 
 	@Override
 	public SqlUserInfoDO selectUserById(int userId) {
-		List<SqlUserInfoDO> result = userInfoDao.query(userId, null, null, null, null);
+		List<SqlUserInfoDO> result = userInfoDao.query(userId, null, null, null, null,null);
 		if (!CollectionUtils.isEmpty(result)) {
 			return result.get(0);
 		}
@@ -63,7 +63,7 @@ public class UserInfoManager implements RPCUserInfoManagerInterface {
 
 	@Override
 	public SqlUserInfoDO selectUserByUserName(String userName) {
-		List<SqlUserInfoDO> result = userInfoDao.query(null, userName, null, null, null);
+		List<SqlUserInfoDO> result = userInfoDao.query(null, userName, null, null, null,null);
 		if (!CollectionUtils.isEmpty(result)) {
 			return result.get(0);
 		}
@@ -72,9 +72,9 @@ public class UserInfoManager implements RPCUserInfoManagerInterface {
 
 	@Override
 	public SqlUserInfoDO[] selectUser(Integer userId, String userName, String level,
-			Boolean isEmployee, Integer hospitalId, Integer offset, Integer length) {
+			Boolean isEmployee, Integer hospitalId,int staffId,Integer offset, Integer length) {
 		List<SqlUserInfoDO> ret = userInfoDao.query(userId, userName, level, isEmployee,
-				hospitalId, offset, length);
+				hospitalId, staffId,offset, length);
 		return ret.toArray(new SqlUserInfoDO[ret.size()]);
 	}
 

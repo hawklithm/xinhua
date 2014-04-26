@@ -1,9 +1,19 @@
 package com.multiagent.hawklithm.davinci.rpc.DO;
 
 import java.util.Date;
-
+/*
+ * RPC接口信息
+ * 接口ID
+ * 接口创建的时间
+ * 家口修改的时间
+ * 接口的名称
+ * 类的名称
+ * 目标对象
+ * 评论
+ * 是不是可见，既可以马上使用
+ */
 public class RPCInterfaceInfoDO {
-	private int interfaceId;
+	private int interfaceId;           
 	private Date gmtCreate;
 	private Date gmtModified;
 	private String interfaceName;

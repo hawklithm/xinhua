@@ -4,7 +4,10 @@ import java.util.Date;
 
 import com.multiagent.hawklithm.transport.DO.SqlTransportOrderClusterDO;
 import com.multiagent.hawklithm.transport.DO.TempTransportOrderClusterDO;
-
+/*
+ * RPC传输订单管理接口
+ * 包括增删改查
+ */
 public interface RPCTransportOrderManagerInterface {
 
 	void submitOrder(TempTransportOrderClusterDO clusterDO) throws Exception;

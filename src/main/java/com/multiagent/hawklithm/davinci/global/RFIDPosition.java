@@ -5,6 +5,7 @@ package com.multiagent.hawklithm.davinci.global;
  *
  */
 public class RFIDPosition {
+	//RFIDÒÇÆ÷µÄÎ»ÖÃ
 	public static String INDOOR="indoor";
 	public static String PRESORTING="presorting";
 	public static String CLEAN_AND_DISINFECTION="clean_and_disinfection";

@@ -7,7 +7,16 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
-
+/*
+ * 改变通知属性
+ * 器械的增加
+ * 器械移除
+ * 器械包的添加
+ * 器械包的移除
+ * 仪器的RFID
+ * 员工的RFID
+ * 产生的时间
+ */
 public class ChangerAnnouncerPropertyArrayVersion {
 	private ItemInfoDO[] itemAdd;
 	private ItemInfoDO[] itemRemove;

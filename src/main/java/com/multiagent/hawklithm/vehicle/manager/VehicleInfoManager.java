@@ -14,7 +14,7 @@ import com.multiagent.hawklithm.vehicle.interface4rpc.RPCVehicleInfoManagerInter
  */
 public class VehicleInfoManager implements RPCVehicleInfoManagerInterface {
 	private IbatisVehicleInfoDAO vehicleInfoDao;
-
+//添加车辆信息，包含车辆的类型，
 	@Override
 	public boolean addVehicleInformation(String vehicleType, Integer vehicleLevel,
 			Double vehicleCapacity) throws DataAccessException {

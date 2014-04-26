@@ -13,18 +13,22 @@ import com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemProtocol;
 import com.multiagent.hawklithm.davinci.rpc.Server.RPCRegManager;
 import com.multiagent.hawklithm.davinci.rpc.Server.RPCServerExecManager;
 import com.multiagent.hawklithm.davinci.rpc.acl.RPCACLManager;
-//已读
+//RPC服务器端通道处理
 public class RPCServerNettyHandler extends NettyHandler {
 	private Gson gson = new Gson();
 	private RPCRegManager RPCregManager;
 	private RPCServerExecManager rpcExec;
 	private RPCBufferCallBackWatcher watcher;
 	private RPCACLManager aclManager;
-
+/*
+ * (non-Javadoc)数据接受时候的信息处理
+ * @see com.multiagent.hawklithm.davinci.net.NettyHandler#onMessageReceived(java.lang.String, org.jboss.netty.channel.Channel)
+ */
 	@Override
 	public void onMessageReceived(String msg, Channel cha) throws MessageTransportException {
 		System.out.println(msg);
 		RPCSystemProtocol rpcMessage = gson.fromJson(msg, RPCSystemProtocol.class);
+		System.out.println("成功后接收到了信息");
 		try {
 			if (!aclManager.verifyRPCInterfaceCall(rpcMessage)) {
 				rpcMessage.setReturnObject("have no permission");
@@ -34,6 +38,7 @@ public class RPCServerNettyHandler extends NettyHandler {
 				throw new MessageTransportException("RPC包错误");
 			}
 			Object instance = RPCregManager.getTarget(rpcMessage);
+			System.out.println("开始执行来自客户端的请求");
 			Object ret = rpcExec.exec(rpcMessage.getClassName(), rpcMessage.getMethodName(),
 					rpcMessage.getParamsType(), instance, rpcMessage.getParameters());
 			System.out.println("RPC函数执行完毕");

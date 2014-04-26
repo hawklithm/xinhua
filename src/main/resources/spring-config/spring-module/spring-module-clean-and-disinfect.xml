@@ -6,7 +6,7 @@
            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
 	default-autowire="byName" default-lazy-init="false">
-
+<!-- 清洗消毒模块 -->
 	<bean id="clean_and_disinfect_process_module"
 		class="com.multiagent.hawklithm.leon.process.CleanAndDisinfectProcess">
 		<property name="equipmentList">
@@ -28,7 +28,7 @@
 			</list>
 		</property>
 	</bean>
-	
+	<!-- 清洗消毒门 -->
 	<bean id="clean_and_disinfect_gate" class="com.multiagent.hawklithm.leon.module.Gate" init-method="initWarden">
 		<property name="moduleProperty">
 			<bean class="com.multiagent.hawklithm.leon.module.property.DO.GateProperty">

@@ -6,9 +6,12 @@ import com.multiagent.hawklithm.davinci.exceptioin.EquipmentNotFoundException;
 import com.multiagent.hawklithm.leon.module.EquipmentObject;
 import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty;
 import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
-
+/*
+ * 流水线过程模块
+ */
 public interface IProcessModule {
 	/**
+	 * 
 	 * 获取模块名称
 	 * @return 模块名称
 	 */

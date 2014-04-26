@@ -13,12 +13,12 @@ vehicle_capacity			float				车辆容量
  * 2013-12-25下午3:59:38
  */
 public class VehicleInfoDO {
-	private Integer vehicleId;
-	private Date gmtCreate;
-	private Date gmtModified;
-	private String vehicleType;
-	private Integer vehicleLevel;
-	private double vehicleCapacity;
+	private Integer vehicleId;   //车辆id
+	private Date gmtCreate;      //车辆创建的时间
+	private Date gmtModified;    //车辆信息更改的时间
+	private String vehicleType;  //车辆的类型
+	private Integer vehicleLevel;   //车辆的等级
+	private double vehicleCapacity;   //车辆的容量
 
 	public Integer getVehicleId() {
 		return vehicleId;

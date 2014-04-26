@@ -17,15 +17,15 @@ equipmentType		varchar			设备类型
  * 2013-12-25下午1:07:17
  */
 public class MachineInfoDO {
-	private Integer id;
-	private Date gmtCreate;
-	private Date gmtModified;
-	private Date gmtBuy;
-	private Date gmtLastRepair;
-	private Integer equipmentId;
-	private String manufacturer;
-	private String detail;
-	private String equipmentType;
+	private Integer id;    //Id
+	private Date gmtCreate;  //纪录的创建时间
+	private Date gmtModified;   //记录的更改时间
+	private Date gmtBuy;         //购买时间
+	private Date gmtLastRepair;    //上次维修时间
+	private Integer equipmentId;   //机器的RFID
+	private String manufacturer;     //生产厂家
+	private String detail;           //设备详细参数
+	private String equipmentType;     //设备类型
 	public String getManufacturer() {
 		return manufacturer;
 	}
