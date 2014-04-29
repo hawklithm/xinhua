@@ -6,6 +6,7 @@ import com.multiagent.hawklithm.history.dataobject.ExItemHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.PackageHistoryDO;
 import com.multiagent.hawklithm.leon.DO.SqlEquipCamReaderMappingDO;
 import com.multiagent.hawklithm.leon.DO.SqlReaderAtEquipmentDO;
+import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerPropertyArrayVersion;
 
 public interface RPCMachineFlowRecordManagerInterface {
 
@@ -30,6 +31,9 @@ public interface RPCMachineFlowRecordManagerInterface {
 
 	PackageHistoryDO[] queryPackageHistory(Integer id, Integer packageId, Integer readerId,
 			Integer equipmentId, Date startTime, Date endTime, Integer offset, Integer length);
+
+
+	ChangerAnnouncerPropertyArrayVersion[] getEquipmentsTodayHistoryInfo(Date startTime, Integer[] equipmentIds);
 
 
 

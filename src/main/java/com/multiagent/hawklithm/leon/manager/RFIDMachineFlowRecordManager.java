@@ -1,8 +1,11 @@
 package com.multiagent.hawklithm.leon.manager;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.util.Assert;
@@ -20,6 +23,9 @@ import com.multiagent.hawklithm.leon.DO.SqlReaderAtEquipmentDO;
 import com.multiagent.hawklithm.leon.dao.ItemPackageMappingInfoDAO;
 import com.multiagent.hawklithm.leon.dao.MachineFlowRecordDAO;
 import com.multiagent.hawklithm.leon.interface4rpc.RPCMachineFlowRecordManagerInterface;
+import com.multiagent.hawklithm.leon.module.Gate;
+import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty;
+import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerPropertyArrayVersion;
 import com.multiagent.hawklithm.machineInfo.DAO.IbatisEquipmentStaffMappingDAO;
 import com.multiagent.hawklithm.machineInfo.DAO.IbatisMachineInfoDAO;
 import com.multiagent.hawklithm.machineInfo.DO.EquipmentStaffMappingDO;
@@ -146,6 +152,55 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 		}
 		return null;
 	}
+	
+	@Override
+	public ChangerAnnouncerPropertyArrayVersion[] getEquipmentsTodayHistoryInfo(Date startTime,
+			Integer[] equipmentIds) {
+		try {
+			StringBuilder condition = new StringBuilder();
+//			if (equipmentIds.length == 0) {
+//				return new SqlReaderAtEquipmentDO[0];
+//			}
+			condition.append(" equipment_id=").append(equipmentIds[0]).append(" ");
+			for (int i = 1; i < equipmentIds.length; i++) {
+				condition.append("or equipment_id=").append(equipmentIds[i]).append(" ");
+			}
+			//TODO  分组到各个设备
+			Map<Integer,ChangerAnnouncerProperty> machineGroup=new HashMap<Integer,ChangerAnnouncerProperty>();
+			List<SqlReaderAtEquipmentDO> items = machineDataDao.selectTodaysHistoryInfo(startTime,
+					condition.toString());
+//			Set<Integer> itemMap=new HashSet<Integer >();
+			for (SqlReaderAtEquipmentDO item:items){
+				ChangerAnnouncerProperty one;
+				if (!machineGroup.containsKey(item.getEquipmentId())){
+					one=new ChangerAnnouncerProperty();
+					one.setMachineRFID(item.getEquipmentId());
+					if (item.getEquipmentId()==equipmentIds[equipmentIds.length-1]){
+						one.setSourceType(Gate.GATE_TAG);
+					}
+					one.setStaffRFID(item.getStaffId());
+				}else {
+					one=machineGroup.get(item.getEquipmentId());
+				}
+				ItemInfoDO itemInfo=ibatisItemInfoDao.queryById(item.getItemId());
+				if (!one.getItemAdd().contains(itemInfo.getItemId())){
+					one.getItemAdd().add(itemInfo);
+				}else{
+					one.getItemRemove().add(itemInfo);
+				}
+			}
+			List<ChangerAnnouncerPropertyArrayVersion> ans=new ArrayList<ChangerAnnouncerPropertyArrayVersion>();
+			for (Map.Entry<Integer, ChangerAnnouncerProperty> entry:machineGroup.entrySet()){
+				ChangerAnnouncerPropertyArrayVersion object=new ChangerAnnouncerPropertyArrayVersion(entry.getValue());
+				ans.add(object);
+			}
+			return ans.toArray(new ChangerAnnouncerPropertyArrayVersion[ans.size()]);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	@Override
 	public SqlReaderAtEquipmentDO[] getEquipmentHistoryInfoByPackageId(Integer packageId,

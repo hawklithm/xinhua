@@ -96,6 +96,18 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			</isNotNull>
 		</dynamic>
 	</select>
+	<select id="MachineFlowRecordDAO.selectTodaysHistoryInfo" parameterClass="java.util.Map" resultMap="EquipmentHistoryDO">
+		select id,time,gmt_create,gmt_modified,package_id,item_id,reader_id,camera_id,equipment_id,staff_id
+		from tb_equipment_history
+		<dynamic prepend="where">
+			<isNotNull property="startTime" prepend="and">
+				<![CDATA[time>=#startTime# ]]>
+			</isNotNull>
+			<isNotNull property="equipmentCondition" prepend="and">
+				(#equipmentCondition#)
+			</isNotNull>
+		</dynamic>
+	</select>
 	<insert id="MachineFlowRecordDAO.insertObject" parameterClass="java.util.Map">
 	insert into tb_equipment_history(
 	time,

@@ -1,5 +1,6 @@
 package com.multiagent.hawklithm.leon.process;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,8 @@ import com.google.gson.Gson;
 import com.multiagent.hawklithm.davinci.exceptioin.EquipmentNotFoundException;
 import com.multiagent.hawklithm.davinci.exceptioin.ModuleNotFoundException;
 import com.multiagent.hawklithm.davinci.exceptioin.ProcessModuleNotFoundException;
+import com.multiagent.hawklithm.leon.module.EquipmentObject;
+import com.multiagent.hawklithm.leon.module.Gate;
 import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty;
 import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerPropertyArrayVersion;
 import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
@@ -70,5 +73,25 @@ public class ProcessInfoManager implements RPCProcessInfoManagerInterface {
 			ret[i].setTimeStamp(new Date());
 		}
 		return ret;
+	}
+
+	@Override
+	public Integer[] getMachineId(String processName) throws ProcessModuleNotFoundException {
+		if (!ProcessMap.containsKey(processName)) {
+			throw new ProcessModuleNotFoundException(" ", processName);
+		}
+		IProcessModule process = ProcessMap.get(processName);
+		List<? extends EquipmentObject<?>> list=process.getEquipmentList();
+		List<Integer> ans=new ArrayList<Integer>();
+		Integer gateId=null;
+		for (EquipmentObject t:list){
+			if (!(t instanceof Gate)){
+				ans.add(t.getRfid());
+			}else{
+				gateId=t.getRfid();
+			}
+		}
+		ans.add(gateId);
+		return ans.toArray(new Integer[ans.size()]);
 	}
 }

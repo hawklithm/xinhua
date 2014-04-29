@@ -66,6 +66,16 @@ public class MachineFlowRecordDAO {
 		return (List<SqlReaderAtEquipmentDO>) ibatisManager.select(
 				"MachineFlowRecordDAO.selectHistoryInfo", map);
 	}
+	
+	public List<SqlReaderAtEquipmentDO> selectTodaysHistoryInfo(Date startTime,
+			String equipmentCondition) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startTime", startTime);
+		map.put("equipmentCondition", equipmentCondition);
+		return (List<SqlReaderAtEquipmentDO>) ibatisManager.select(
+				"MachineFlowRecordDAO.selectTodaysHistoryInfo", map);
+	}
+	
 
 
 	public Integer insertObject(final Integer itemId, final Integer packageId,
