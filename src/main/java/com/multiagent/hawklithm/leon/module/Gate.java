@@ -44,7 +44,7 @@ public class Gate extends EquipmentObject<GateProperty>{
 			}
 
 		});
-		this.registWarden(new Warden(this.getWorkspaceName() + WardenMessage.TARGET_TYPE_ENTRY, WardenMessage.KIND_RFID_FROM_READER + WardenMessage.DIR_EXIT) {
+		this.registWarden(new Warden(String.valueOf(this.getRfid())+this.getWorkspaceName() + WardenMessage.TARGET_TYPE_ENTRY, WardenMessage.KIND_RFID_FROM_READER + WardenMessage.DIR_EXIT) {
 
 			@Override
 			public void asynchronizedProcess(String message) {

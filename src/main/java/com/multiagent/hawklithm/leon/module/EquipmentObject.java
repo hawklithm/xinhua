@@ -1,7 +1,6 @@
 package com.multiagent.hawklithm.leon.module;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -71,8 +70,8 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 //		itemRFIDs.add(Integer.valueOf(RFID));
 //		moduleProperty.getItemRFIDs().add(Integer.valueOf(RFID));
 		ItemInfoDO item=ibatisItemInfoDao.queryById(RFID);
-		StringBuilder builder=new StringBuilder(item.getRemark());
-		builder.append(';').append(new Date()).append(',').append(moduleProperty.getRfid()).append(',').append(moduleProperty.getStaffRFID());
+//		StringBuilder builder=new StringBuilder(item.getRemark());
+//		builder.append(';').append(new Date()).append(',').append(moduleProperty.getRfid()).append(',').append(moduleProperty.getStaffRFID());
 		moduleProperty.addItem(item);
 		propertyBuffer.addItem(item);
 	}
