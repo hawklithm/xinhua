@@ -9,11 +9,11 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 		<result property="gmtCreate" column="gmt_create" />
 		<result property="gmtModified" column="gmt_modified" />
 		<result property="userName" column="user_name" />
-		<result property="password" column="password" />
-		<result property="level" column="level" />
+		<result property="password" column="password"/>
 		<result property="isEmployee" column="is_employee" />
-		<result property="hospitalId" column="hospital_id " />
-		<result property="enable" column="enable" />
+		<result property="hospitalId" column="hospital_id" />
+		<result property="level" column="level"/>
+		<result property="enable" column="enable"/>
 		<result property="staffId" column="staff_id" />
 	</resultMap>
 	<delete id="UserInfoIbatisDAO.deleteById" parameterClass="java.util.Map">
@@ -114,7 +114,7 @@ PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
 			</isNotNull> <isNotNull property="level" prepend="and"> p.authority=#level# 
 			</isNotNull> </dynamic> -->
 		select
-		user_id,gmt_create,gmt_modified,user_name,is_employee,hospital_id,staff_Id
+	*
 		from
 		tb_user
 		<dynamic prepend="where">

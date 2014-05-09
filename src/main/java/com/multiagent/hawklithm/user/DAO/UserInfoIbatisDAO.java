@@ -118,11 +118,11 @@ public class UserInfoIbatisDAO {
 		for (SqlUserInfoDO info : infos) {
 			List<String> roles = selectUserRole(info.getUserId());
 			StringBuilder levels = new StringBuilder();
-			for (String role : roles) {
+		/*	for (String role : roles) {
 				levels.append(role).append(",");
 			}
 			levels.deleteCharAt(levels.length());
-			info.setLevel(levels.toString());
+			info.setLevel(levels.toString());*/
 		}
 		return infos;
 	}

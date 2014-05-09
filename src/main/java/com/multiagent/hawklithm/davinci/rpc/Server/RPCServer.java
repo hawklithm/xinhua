@@ -23,7 +23,7 @@ import com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy;
  */
 public class RPCServer implements BeanPostProcessor/* , IRPCDataExchange */{
 
-	private int port = 0;
+	private int port ;
 	private NettyHandler rpcServerNettyHandler;
 	private RPCRegManager RPCregManager;
 
@@ -48,6 +48,7 @@ public class RPCServer implements BeanPostProcessor/* , IRPCDataExchange */{
 			}
 
 		});
+
 		bootstrap.bind(new InetSocketAddress(port));
 		System.out.println("RPC server¿ªÆô³É¹¦");
 	}

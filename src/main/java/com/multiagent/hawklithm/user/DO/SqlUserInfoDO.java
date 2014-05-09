@@ -11,12 +11,19 @@ public class SqlUserInfoDO {
 	private Date gmtCreate;
 	private Date gmtModified;
 	private String userName;
-	private String level;
 	private String password;
 	private Boolean isEmployee;
 	private Integer hospitalId;
 	private Boolean enable;
 	private Integer staffId;
+	private String level;
+	
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
@@ -64,12 +71,6 @@ public class SqlUserInfoDO {
 	}
 	public void setEnable(Boolean enable) {
 		this.enable = enable;
-	}
-	public String getLevel() {
-		return level;
-	}
-	public void setLevel(String level) {
-		this.level = level;
 	}
 	public Integer getStaffId() {
 		return staffId;
