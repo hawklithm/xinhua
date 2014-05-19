@@ -31,6 +31,9 @@ public class CleanAndDisinfectEquipmentModule extends EquipmentObject<CleanAndDi
 
 	@Override
 	public void initWarden() {
+		/*
+		 * 注册不同的Warden，name是RFID+数据接收模块是数据接收模块                                      从读卡器来的数据+数据流向是进入
+		 */
 		this.registWarden(new Warden(String.valueOf(this.getRfid()) + WardenMessage.TARGET_TYPE_MACHINE, WardenMessage.KIND_RFID_FROM_READER + WardenMessage.DIR_ENTER) {
 
 			@Override
@@ -42,6 +45,9 @@ public class CleanAndDisinfectEquipmentModule extends EquipmentObject<CleanAndDi
 			}
 
 		});
+		/*
+		 * 注册舒数据流出处理
+		 */
 		this.registWarden(new Warden(String.valueOf(this.getRfid()) + WardenMessage.TARGET_TYPE_MACHINE, WardenMessage.KIND_RFID_FROM_READER + WardenMessage.DIR_EXIT) {
 
 			@Override
@@ -53,6 +59,7 @@ public class CleanAndDisinfectEquipmentModule extends EquipmentObject<CleanAndDi
 			}
 
 		});
+		//将机器的RFID、相关的员工号码对应起来
 		propertyBuffer.init(getRfid(), getStaffRFID());
 	}
 

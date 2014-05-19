@@ -16,6 +16,9 @@ import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty
 import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
 import com.multiagent.hawklithm.leon.process.interface4rpc.RPCProcessInfoManagerInterface;
 
+/*
+ * 流水线执行管理器
+ */
 public class ProcessInfoManager implements RPCProcessInfoManagerInterface {
 	public Map<String, IProcessModule> ProcessMap;
 	private Gson gson=new Gson();
@@ -56,7 +59,10 @@ public class ProcessInfoManager implements RPCProcessInfoManagerInterface {
 	public void setProcessMap(Map<String, IProcessModule> processMap) {
 		ProcessMap = processMap;
 	}
-
+/*
+ * 获得相应的(non-Javadoc)
+ * @see com.multiagent.hawklithm.leon.process.interface4rpc.RPCProcessInfoManagerInterface#getBufferedPropertyList(java.lang.String)
+ */
 	@Override
 	public ChangerAnnouncerPropertyArrayVersion[] getBufferedPropertyList(String processName)  throws ModuleNotFoundException{
 		if (!ProcessMap.containsKey(processName)) {

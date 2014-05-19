@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
-
+/*
+ * 通知消息屬性
+ */
 public class ChangerAnnouncerProperty {
 
 	private List<ItemInfoDO> itemAdd=new ArrayList<ItemInfoDO>();
 	private List<ItemInfoDO> itemRemove=new ArrayList<ItemInfoDO>();
 	private List<Integer> packageAdd=new ArrayList<Integer>();
 	private List<Integer> packageRmove=new ArrayList<Integer>();
+/*
+ * 设备的RFID
+ * 员工的RFID
+ */
 	private Integer machineRFID;
 	private Integer staffRFID;
 	private String sourceType="";

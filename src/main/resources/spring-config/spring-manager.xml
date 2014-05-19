@@ -60,6 +60,14 @@
 	<!-- 机器信息管理 -->
 	<bean id="machineInfoManager"
 		class="com.multiagent.hawklithm.machineInfo.manager.MachineInfoManager" />
+		
+	<!-- 手术包信息管理 -->
+	<bean id="packageInfoManager"
+		class="com.multiagent.hawklithm.pack.manager.PackageInfoManager"/>
+		
+	<!-- 器械手术包映射信息管理 -->
+	<bean id="itemPackMappingInfoManager"
+		class="com.multiagent.hawklithm.itempackmapping.manager.ItemPackMappingInfoManager"/>
 
 	<!-- 车辆信息管理 -->
 	<bean id="vehicleInfoManager"

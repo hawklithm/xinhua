@@ -13,6 +13,10 @@ import com.multiagent.hawklithm.global.pusher.IMessagePusher;
  */
 public abstract class Warden {
 	private String name;//消息监听者编号或者名字
+	/*
+	 * 储存所有类型
+	 * 分拣开始、结束等等
+	 */
 	private Set<String> kinds = new HashSet<String>();
 	private IMessagePusher<WardenMessage> pusher;
 	

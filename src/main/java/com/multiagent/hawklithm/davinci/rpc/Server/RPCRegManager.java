@@ -34,6 +34,7 @@ public class RPCRegManager {
 	
 	public Object getTarget(RPCSystemProtocol info) throws RPCInterfaceNotFoundException{
 		for (RPCSystemServerProxy object:regList){
+			//RPCSystemProtocol的类名实际上等于RPCSystemServerProxy的接口名
 			if (object.getInterfaceName().equals(info.getClassName())){
 				if(object.getVersion().equals(info.getVersion())){
 					return object.getTarget();

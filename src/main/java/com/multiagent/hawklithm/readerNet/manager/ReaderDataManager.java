@@ -17,7 +17,9 @@ public class ReaderDataManager {
 	private MachineFlowRecordDAO machineDataDao;
 	private WardenOperator readerMessageComingPusher;
 	private Gson gson =new Gson();
-
+/*
+ * 存入数据库
+ */
 	private int submitData(SqlRFIDOriginalObject[] infoArray) {
 		int maxId=0;
 //		System.out.println(gson.toJson(infoArray));
@@ -35,6 +37,10 @@ public class ReaderDataManager {
 		}
 		return maxId;
 	}
+	/*
+	 * 将从读卡器读来的数据一方面存到数据库
+	 * 另一方面发送到前台进行状态定义
+	 */
 	public void OriginalDataDealing(RFIDOriginalInfos infos){
 		submitData(infos.getInfos());//存入数据库
 		sendOutDataComingMessage(infos);//发送消息给读卡器模块进行状态定义
@@ -45,15 +51,17 @@ public class ReaderDataManager {
 	 */
 	private void sendOutDataComingMessage(RFIDOriginalInfos infos){
 		WardenMessage msg=new WardenMessage();
+		//接收从读卡器来的消息，数据流向进入
 		msg.setKind(WardenMessage.KIND_NEW_DATA_COMING+WardenMessage.DIR_ENTER);
 		String target="";
 		for (String s:infos.getTargets()){
+			//表示数据的接受者是读卡器
 			target+=s+WardenMessage.TARGET_TYPE_READER+"|";
 		}
 		if (target.charAt(target.length()-1)=='|'){
 			target=target.substring(0, target.length()-1);
 		}
-		System.out.println("message target : "+target);
+		System.out.println("姚阿龙: "+target);
 		msg.setTarget(target);
 		
 		msg.setNote(gson.toJson(infos.getInfos()));

@@ -57,7 +57,7 @@
 		<property name="comment" value="此处填写接口介绍" />
 		<property name="visible" value="true" />
 	</bean>
-
+<!-- 订单管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.sephiroth.interface4rpc.RPCOrderManagerInterface" />
@@ -68,6 +68,7 @@
 		<property name="comment" value="订单处理RPC接口" />
 		<property name="visible" value="true" />
 	</bean>
+	<!-- 运输管理接口 -->
 
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
@@ -79,7 +80,7 @@
 		<property name="comment" value="运单处理RPC接口" />
 		<property name="visible" value="true" />
 	</bean>
-
+<!-- 医院信息管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.hospital.interface4rpc.RPCHospitalInfoManagerInterface" />
@@ -91,7 +92,7 @@
 		<property name="visible" value="true" />
 	</bean>
 
-
+<!-- 设备信息管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.machineInfo.interface4rpc.RPCMachineInfoManagerInterface" />
@@ -102,7 +103,7 @@
 		<property name="comment" value="设备信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-
+<!-- 员工信息管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.staff.interface4rpc.RPCStaffInfoManagerInterface" />
@@ -113,7 +114,7 @@
 		<property name="comment" value="员工信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-
+<!-- 用户信息管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.user.interface4rpc.RPCUserInfoManagerInterface" />
@@ -124,7 +125,7 @@
 		<property name="comment" value="用户信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-
+<!-- 车辆管理信息接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.vehicle.interface4rpc.RPCVehicleInfoManagerInterface" />
@@ -135,7 +136,7 @@
 		<property name="comment" value="车辆信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-
+<!-- 生产过程管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.leon.process.interface4rpc.RPCProcessInfoManagerInterface" />
@@ -146,7 +147,7 @@
 		<property name="comment" value="生产过程信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-	
+	<!-- 设备流水线过程管理 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.leon.interface4rpc.RPCMachineFlowRecordManagerInterface" />
@@ -157,7 +158,7 @@
 		<property name="comment" value="流水信息管理" />
 		<property name="visible" value="true" />
 	</bean>
-	
+	<!-- GPS信息管理器 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.gps.interface4rpc.RPCGpsInfoManagerInterface" />
@@ -168,6 +169,7 @@
 		<property name="comment" value="地理信息管理" />
 		<property name="visible" value="true" />
 	</bean>
+	<!-- 器械信息管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.item.interface4rpc.RPCItemInfoManagerInterface" />
@@ -178,6 +180,8 @@
 		<property name="comment" value="器械信息管理" />
 		<property name="visible" value="true" />
 	</bean>
+	
+	<!-- 通知信息管理接口 -->
 	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
 		<property name="interfaceName"
 			value="com.multiagent.hawklithm.shadowsong.manager.interface4rpc.RPCAnnouncementManager" />
@@ -188,4 +192,31 @@
 		<property name="comment" value="通知信息管理" />
 		<property name="visible" value="true" />
 	</bean>
+	
+	<!-- 手术包信息管理接口 -->
+	
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.pack.interface4rpc.RPCPackageInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="packageInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.pack.manager.PackageInfoManager" />
+		<property name="comment" value="手术包信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+	
+	<!-- 器械手术包映射信息管理" -->
+	
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.itempackmapping.interface4rpc.RPCItemPackMappingInfoManagerInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="itemPackMappingInfoManager" />
+		<property name="className"
+			value="com.multiagent.hawklithm.itempackmapping.manager.ItemPackMappingInfoManager" />
+		<property name="comment" value="器械手术包映射信息管理" />
+		<property name="visible" value="true" />
+	</bean>
+	
 </beans>

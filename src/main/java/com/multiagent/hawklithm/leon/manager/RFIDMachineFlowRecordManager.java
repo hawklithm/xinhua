@@ -35,6 +35,14 @@ import com.multiagent.hawklithm.staff.DO.StaffInfoDO;
 
 /**
  * RFID设备流水信息记录管理
+ *设备流水线的管理
+ 手术包的映射管理
+ 手术器械的历史记录
+ 设备信息操作
+ 配置管理
+ 员工信息管理
+ 手术器械管理
+ *
  * 
  * @author hawklithm
  * 
@@ -50,7 +58,9 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 	private IbatisStaffInfoDAO ibatisStaffInfoDao;
 	private IbatisItemInfoDAO ibatisItemInfoDao;
 	
-	
+	/*
+	 * 将手术器械的历史记录存入到数据库中
+	 */
 	public Integer storeItemHistoryToDataBase(Date time, Integer itemId, Integer readerId, Integer cameraId, String itemStatus,Integer equipmentId){
 		try {
 			System.out.println("store item history to database");

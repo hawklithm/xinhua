@@ -60,7 +60,9 @@
 			</bean>
 		</property>
 	</bean>
-
+<!-- 
+读卡器一他的目标RFID是第一个设备 
+表示进入-->
 	<bean id="clean_and_disinfect_reader1" class="com.multiagent.hawklithm.leon.module.Reader"
 		init-method="initWarden">
 		<property name="moduleProperty">
@@ -75,7 +77,9 @@
 		</property>
 
 	</bean>
-
+<!-- 
+读卡器二的目标RFID是第一个设备
+表示出来 -->
 	<bean id="clean_and_disinfect_reader2" class="com.multiagent.hawklithm.leon.module.Reader"
 		init-method="initWarden">
 		<property name="moduleProperty">
@@ -89,7 +93,9 @@
 			</bean>
 		</property>
 	</bean>
-	
+	<!-- 
+	读卡器三的目标是第二个设备
+	进来 -->
 	<bean id="clean_and_disinfect_reader3" class="com.multiagent.hawklithm.leon.module.Reader"
 		init-method="initWarden">
 		<property name="moduleProperty">
@@ -104,7 +110,8 @@
 		</property>
 
 	</bean>
-
+<!-- 读卡器四的目标是第二个设备
+退出 -->
 	<bean id="clean_and_disinfect_reader4" class="com.multiagent.hawklithm.leon.module.Reader"
 		init-method="initWarden">
 		<property name="moduleProperty">
@@ -118,7 +125,8 @@
 			</bean>
 		</property>
 	</bean>
-	
+	<!-- 读卡器五目标是门
+	代表进来 -->
 	<bean id="clean_and_disinfect_reader5" class="com.multiagent.hawklithm.leon.module.Reader"
 		init-method="initWarden">
 		<property name="moduleProperty">
@@ -132,7 +140,9 @@
 			</bean>
 		</property>
 	</bean>
-	
+	<!-- 
+	读卡器五目标是门
+	代表出去 -->
 	<bean id="clean_and_disinfect_reader6" class="com.multiagent.hawklithm.leon.module.Reader"
 		init-method="initWarden">
 		<property name="moduleProperty">
@@ -146,7 +156,8 @@
 			</bean>
 		</property>
 	</bean>
-
+<!-- 
+用来处理单个门进出的 -->
 	<bean id="clean_and_disinfect_singleRead3"
 		class="com.multiagent.hawklithm.leon.module.DynamicStatusReader"
 		init-method="initWarden">

@@ -19,6 +19,7 @@ import com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy;
 /**
  * 
  * @author hawklithm
+ * 在RPCServer里面讲所有的订单、员工查询的RPC接口进行注册到RPCRegManager
  * RPC服务端
  */
 public class RPCServer implements BeanPostProcessor/* , IRPCDataExchange */{

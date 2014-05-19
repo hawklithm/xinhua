@@ -2,7 +2,9 @@ package com.multiagent.hawklithm.leon.module.property.DO;
 
 public class GateProperty extends ModuleProperty{
 
-	
+	/*
+	 * ÇåÏ´Ïû¶¾¹¤¶Î
+	 */
 	private String workspaceNameToUser;
 	private String workspaceName;
 	@Override

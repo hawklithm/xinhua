@@ -21,4 +21,6 @@
 	<bean id="ibatisEquipmentStaffMappingDAO" class="com.multiagent.hawklithm.machineInfo.DAO.IbatisEquipmentStaffMappingDAO"/>
 	<bean id="itemPackageMappingInfoDAO" class="com.multiagent.hawklithm.leon.dao.ItemPackageMappingInfoDAO"/>
 	<bean id="ibatisItemInfoDao" class="com.multiagent.hawklithm.item.dao.IbatisItemInfoDAO"/>
+	<bean id="ibatisPackageInfoDao" class="com.multiagent.hawklithm.pack.DAO.IbatisPackageInfoDAO"/>
+	<bean id="ibatisItemPackMappingInfoDAO" class="com.multiagent.hawklithm.itempackmapping.DAO.IbatisItemPackMappingInfoDAO"/>
 </beans>

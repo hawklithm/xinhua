@@ -3,6 +3,7 @@ package com.multiagent.hawklithm.global.dataobject;
  * target表示接收信息的实体的标记
  * kind表示消息类型，所有实体更具类型分类
  * note表示消息的containt
+ * note表示消息的实际内容
  * @author hawklithm
  *
  */

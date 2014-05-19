@@ -8,7 +8,16 @@ import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 
 
 
-//属性模块,包括RFID,器械Rfid,包裹的RFID
+/*
+ * 流水线模块信息
+ * 包括RFID
+ * 器械的RFID
+ * 手术包的RFID、手术包的添加
+ * 该员工的RFID
+ * 可以进行各种信息的RFID的添加
+ * 还有模块的具体信息
+ * 生产厂家
+ */
 public abstract class ModuleProperty implements PropertyCollector {
 	protected int rfid = (int) (Math.random() * 100000);
 	protected Set<ItemInfoDO> itemRFIDs=new HashSet<ItemInfoDO>();

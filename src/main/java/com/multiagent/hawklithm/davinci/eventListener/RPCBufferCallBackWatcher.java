@@ -7,7 +7,7 @@ import com.multiagent.hawklithm.davinci.net.NettyHandler;
 import com.multiagent.hawklithm.davinci.rpc.DO.RPCConnectInfo;
 /*
  * 
- * RPC时间构成了一个队列
+ * 将netty准备发送的消息储存在一个队列里面
  */
 public class RPCBufferCallBackWatcher  {
 

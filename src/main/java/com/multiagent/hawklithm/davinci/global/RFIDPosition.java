@@ -2,6 +2,13 @@ package com.multiagent.hawklithm.davinci.global;
 /**
  * 
  * @author hawklithm
+ * 包括在门内
+ * 分拣前
+ * 清洗消毒
+ * 分拣
+ * 打包
+ * 再次消毒
+ * 出门
  *
  */
 public class RFIDPosition {

@@ -14,13 +14,21 @@ import com.multiagent.hawklithm.leon.module.property.DO.ModuleProperty;
  * 分拣过程模块
  * 清洗消毒模块
  * 
+ * 每一个清洗消毒流程都有一个equipmentList保存的是设备列表、readerList保存的是读卡器列表
+ * 几乎每个都是进来的门、第一个设备、第二个设备
+ * 读卡器列表是七个读卡器
+ * 
  * @author hawklithm 2013-12-26下午4:12:11
  */
 public class CleanAndDisinfectProcess implements IProcessModule {
 
 	private static String DefaultName = "Clean&DisinfectProcess";
 	private String name = DefaultName;
-	//通过注入设置机器和读卡器的列表
+/*
+ * 在spring-module-clean-and-disinfect.xml里面注入equipmentList的值
+ * equipmentList包括清洗消毒门、清洗消毒设备一、清洗消毒设备二
+ * 和readerList的值
+ */
 	private List<EquipmentObject<? extends ModuleProperty>> equipmentList = new ArrayList<EquipmentObject<? extends ModuleProperty>>();
 	private List<EquipmentObject<? extends ModuleProperty>> readerList = new ArrayList<EquipmentObject<? extends ModuleProperty>>();
 
@@ -43,7 +51,10 @@ public class CleanAndDisinfectProcess implements IProcessModule {
 		this.name = name;
 	}
 
-
+/*
+ * 查询得到相应的EquipmentObject(non-Javadoc)
+ * @see com.multiagent.hawklithm.leon.process.IProcessModule#doGetEquipmentSummaryInfo()
+ */
 	@Override
 	public List<? extends ModuleProperty> doGetEquipmentSummaryInfo() {
 		List<CleanAndDisinfectEquipmentProperty> ret = new ArrayList<CleanAndDisinfectEquipmentProperty>();

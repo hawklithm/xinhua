@@ -14,9 +14,13 @@ public class ReaderNettyHandler extends NettyHandler {
 
 	private Gson gson = new Gson();
 	private ReaderDataManager readerDataManager;
-
+/*
+ * 将接受到的消息教给readerDataManager进行处理(non-Javadoc)
+ * @see com.multiagent.hawklithm.davinci.net.NettyHandler#onMessageReceived(java.lang.String, org.jboss.netty.channel.Channel)
+ */
 	@Override
 	public void onMessageReceived(String message, Channel channel) throws MessageTransportException {
+		System.out.println("dog"+message);
 		RFIDOriginalInfos infos = gson.fromJson(message, RFIDOriginalInfos.class);
 		readerDataManager.OriginalDataDealing(infos);
 	}

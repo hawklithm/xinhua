@@ -40,6 +40,8 @@ public class RPCServerExecManager {
 			//parameterTypes是参数的类型
 			//paramStrs保留的参数的值
 			method = instance.getClass().getMethod(methodName, parameterTypes);
+			System.out.println("具体处理的类是"+instance);
+			System.out.println("方法shi"+method);
 			ret = method.invoke(instance, params);
 		} catch (NoSuchMethodException e) {
 			// TODO 打印日志

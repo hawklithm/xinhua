@@ -26,6 +26,8 @@ public class AsynTaskRegisterMachine implements IRegisterManager{
 	public void startAll(){
 		for (AsynTaskRegister object:asynTaskLists){
 			asynTaskThreadPool.execute(object);
+			
+			
 		}
 //		asynTaskThreadPool.shutdown();
 	}

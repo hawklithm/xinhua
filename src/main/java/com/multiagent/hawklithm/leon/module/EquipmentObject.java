@@ -78,6 +78,7 @@ public abstract class EquipmentObject<T extends ModuleProperty> implements Modul
 	
 	public void addItem(ItemInfoDO item){
 		moduleProperty.addItem(item);
+		//将数据缓存到相应的模块中
 		propertyBuffer.addItem(item);
 	}
 

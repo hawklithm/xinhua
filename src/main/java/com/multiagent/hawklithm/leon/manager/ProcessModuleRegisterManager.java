@@ -10,7 +10,7 @@ import com.multiagent.hawklithm.leon.module.EquipmentObject;
 import com.multiagent.hawklithm.leon.process.IProcessModule;
 
 /**
- * 生产过程模块注册机
+ * 流水线模块注册、包括消毒、分拣等
  * 
  * @author hawklithm
  * 

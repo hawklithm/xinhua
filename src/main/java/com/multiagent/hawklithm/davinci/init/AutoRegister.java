@@ -12,12 +12,14 @@ import com.multiagent.hawklithm.leon.process.IProcessModule;
  * 
  * @author hawklithm
  * AutoRegister主要是执行代理
+ * clean_and_disinfect_process_module
  * 
  */
 public class AutoRegister implements BeanPostProcessor {
 	private AsynTaskRegisterMachine asynTaskRegManager;
 	private ProxyFactoryBean accountService;
 	private ProcessModuleRegisterManager pmRegManager;
+
 	public Object postProcessBeforeInitialization(Object bean, String beanName)
 			throws BeansException {
 		System.out.println("bean name: " + beanName + " "
@@ -33,6 +35,7 @@ public class AutoRegister implements BeanPostProcessor {
 		if (bean instanceof AsynTaskRegister) {
 			System.out.println("bean name: "+beanName+" regist AsynTaskRegister");
 			asynTaskRegManager.regist(bean);
+			//註冊clean_and_disinfect_process_module等模块
 		}else if (bean instanceof IProcessModule){
 			System.out.println("bean name: "+beanName+" regist EquipmentObject");
 			pmRegManager.regist(bean);

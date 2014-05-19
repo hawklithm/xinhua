@@ -19,6 +19,19 @@ import com.multiagent.hawklithm.shadowsong.DO.WardenMessage;
  * 消息注册管理机
  * 
  * @author hawklithm
+ * 主要是读卡器消息的注册
+ * 包括注册消息、消息的推送
+ * map是所有的读卡器类型
+ * String包括gateReader、sortingReader0、sortingReader1、sortingReader2、sortingReaderX、cleanAndDisinfectReader0、cleanAndDisinfectReader1、cleanAndDisinfectReader2
+ * cleanAndDisinfectReaderX、packageReader0、packageReader1、packageReader2、packageReaderX等
+ * kinds包括message_gate_over
+ * message_sorting_enter
+ * message_sorting_start
+ * message_sorting_end
+ * message_sortting_over
+ * message_cleananddisinfect_enter
+ * message_cleananddisinfect_start
+ * message_cleananddisinfect_end等
  * 
  */
 public class WardenManager implements IRegisterManager,

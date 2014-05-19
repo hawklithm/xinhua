@@ -5,6 +5,7 @@ package com.multiagent.hawklithm.readerNet.DO;
  * @author hawklithm
  *
  *SqlRFIDOriginalObject表示RFID消息的bean
+ *targets表示目标RFID
  *
  */
 public class RFIDOriginalInfos {

@@ -5,6 +5,7 @@ import com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemProtocol;
 import com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy;
 /*
  * RPCInterfaceInfoDAO主要来操作代理接口的一些信息
+ * RPC权限控制
  */
 public class RPCACLManager {
 	private RPCInterfaceInfoDAO interfaceInfoDAO;

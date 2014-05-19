@@ -3,6 +3,9 @@ package com.multiagent.hawklithm.leon.plugin;
 import com.multiagent.hawklithm.item.dataobject.ItemInfoDO;
 import com.multiagent.hawklithm.leon.module.property.DO.ChangerAnnouncerProperty;
 
+/*
+ * 读卡器缓存记录类
+ */
 public class EquipmentPropertyChangerAnnouncerBuffer {
 //	private ChangerAnnouncerProperty[] buffer;
 //	private int defaultCapacity = 100;
@@ -137,7 +140,9 @@ public class EquipmentPropertyChangerAnnouncerBuffer {
 			buffer.removePackage(rfid);
 		}
 	}
-
+/*
+ * 将从读卡器传来的数据发给客户端后、自动将缓存中的数据清空
+ */
 	public ChangerAnnouncerProperty getBuffer() {
 		synchronized (this.getClass()) {
 //			List<ChangerAnnouncerProperty> ret = new ArrayList<ChangerAnnouncerProperty>();
