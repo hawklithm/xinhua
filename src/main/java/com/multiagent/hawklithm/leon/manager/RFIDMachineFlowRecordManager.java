@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import com.multiagent.hawklithm.history.dao.ItemHistoryDAO;
 import com.multiagent.hawklithm.history.dao.PackageHistoryDAO;
 import com.multiagent.hawklithm.history.dataobject.ExItemHistoryDO;
+import com.multiagent.hawklithm.history.dataobject.ExPackageHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.ItemHistoryDO;
 import com.multiagent.hawklithm.history.dataobject.PackageHistoryDO;
 import com.multiagent.hawklithm.item.dao.IbatisItemInfoDAO;
@@ -138,10 +139,20 @@ public class RFIDMachineFlowRecordManager implements RPCMachineFlowRecordManager
 	}
 	
 	@Override
-	public PackageHistoryDO[] queryPackageHistory(Integer id, Integer packageId,Integer readerId,Integer equipmentId,Date startTime,Date  endTime,Integer offset,Integer length){
+	public ExPackageHistoryDO[] queryPackageHistory(Integer id, Integer packageId,Integer readerId,Integer equipmentId,Date startTime,Date  endTime,Integer offset,Integer length){
 		 try {
 			List<PackageHistoryDO>ans=packageHistoryDAO.selectPackageHistory(id, packageId, readerId, equipmentId, startTime, endTime,offset,length);
-			return ans.toArray(new PackageHistoryDO[ans.size()]);
+			ExPackageHistoryDO[] ret=new ExPackageHistoryDO[ans.size()];
+			 int tmpLength=ret.length;
+			 for (int index=0;index<tmpLength;index++){
+				 ret[index]=new ExPackageHistoryDO(ans.get(index));
+				 if (ret[index].getEquipmentId()!=null){
+					 ret[index].setProcessName(getEquipmentTypeByEquipmentId(ret[index].getEquipmentId()));
+					 ret[index].setStaffInfo(queryStaffInfoByEquipmentId(ret[index].getEquipmentId()));
+//	                 ret[index].setType(queryItemInfoById(ret[index].getPackageId()).getItemType()+"");
+				 }
+			 }
+			 return ret;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
