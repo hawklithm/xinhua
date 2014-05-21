@@ -95,5 +95,8 @@
 	
 	<!-- 通知管理器 -->
 	<bean id="announcementManager" class="com.multiagent.hawklithm.shadowsong.manager.AnnouncementManager"/>
+	
+	<!-- 历史信息获取器 -->
+	<bean id="historyInfoGetter" class="com.multiagent.hawklithm.history.manager.HistoryInfoGetter"/>
 
 </beans>

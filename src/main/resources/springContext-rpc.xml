@@ -219,4 +219,18 @@
 		<property name="visible" value="true" />
 	</bean>
 	
+	<!-- 历史信息获取器 -->
+	<bean class="com.multiagent.hawklithm.davinci.rpc.DO.RPCSystemServerProxy">
+		<property name="interfaceName"
+			value="com.multiagent.hawklithm.history.interface4rpc.RPCHistoryInfoGetterInterface" />
+		<property name="version" value="1.0.0.hawky" />
+		<property name="beanId" value="historyInfoGetter" />
+		<property name="className"
+			value="com.multiagent.hawklithm.history.manager.HistoryInfoGetter" />
+		<property name="comment" value="历史信息获取器" />
+		<property name="visible" value="true" />
+	</bean>
+	
+	
+	
 </beans>

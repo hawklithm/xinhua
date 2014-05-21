@@ -62,7 +62,7 @@ public class HistoryInfoGetter implements RPCHistoryInfoGetterInterface{
 		calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND)+5);
 		ender=calendar.getTime();
 		calendar.setTime(starter);
-		calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND)-10);
+		calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND)-5);
 		starter=calendar.getTime();
 		return new Pair<Date, Date>(starter, ender);
 	}
@@ -93,5 +93,11 @@ public class HistoryInfoGetter implements RPCHistoryInfoGetterInterface{
 		packAllHistory.setStartTime(pair.getFirst());
 		packAllHistory.setEndTime(pair.getLast());
 		return packAllHistory;
+	}
+	public RFIDMachineFlowRecordManager getRfidManager() {
+		return rfidManager;
+	}
+	public void setRfidManager(RFIDMachineFlowRecordManager rfidManager) {
+		this.rfidManager = rfidManager;
 	}
 }
